@@ -12,6 +12,7 @@
     <properties>
         <spring.version>4.3.10.RELEASE</spring.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
+        <lombok.version>1.16.0</lombok.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,12 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
 
     </dependencies>
 
