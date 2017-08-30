@@ -14,5 +14,5 @@ public interface OrderDAO {
     boolean delete(Order order);
     //
 //    List<Order> getByPrice(double price);
-    List<Order> getByUser(User user);
+//    List<Order> getByUser(User user);
 }

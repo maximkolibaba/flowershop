@@ -11,6 +11,6 @@ public interface FlowerDAO {
     Flower getById(Long id);
     Flower update(Flower flower);
     //
-    Flower getByName(String flowerName);
-    List<Flower> getByTotalPrice(double price);
+//    Flower getByName(String flowerName);
+//    List<Flower> getByTotalPrice(double price);
 }
