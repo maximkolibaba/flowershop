@@ -1,6 +1,8 @@
 package com.accenture.flowershop.be.entity.order;
 
 import com.accenture.flowershop.be.entity.flower.Flower;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -12,6 +14,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "orderId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Order order;    //private Long orderId;
 
     @ManyToOne

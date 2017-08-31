@@ -46,7 +46,7 @@
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="ORACLE"/>
+                <property name="database" value="ORACLE"/> <!-- h2? -->
                 <property name="generateDdl" value="false"/>
                 <property name="showSql" value="true"/>
             </bean>
