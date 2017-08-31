@@ -3,13 +3,64 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util.xsd">
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee.xsd">
 
+    <jee:jndi-lookup id="dbDataSource" jndi-name="jdbc/flowershop" expected-type="javax.sql.DataSource"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.accenture.flowershop"/>
+
+    <!--import resource="classpath:config/jaxws.xml"/-->
+    <!--import resource="classpath*:common-services.xml"/-->
+
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="dataSource" ref="dbDataSource"/>
+        <property name="locations">
+            <array>
+                <value>dbscripts</value>
+            </array>
+        </property>
+        <property name="baselineOnMigrate" value="false"/>
+        <property name="outOfOrder" value="true"/>
+        <property name="sqlMigrationPrefix" value="v"/>
+        <property name="sqlMigrationSeparator" value="__"/>
+        <property name="placeholderPrefix" value="@{"/>
+        <property name="placeholderSuffix" value="}"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          depends-on="flyway">
+        <property name="dataSource" ref="dbDataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.accenture.flowershop.be.entity</value>
+            </list>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="ORACLE"/>
+                <property name="generateDdl" value="false"/>
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
 
 
 </beans>

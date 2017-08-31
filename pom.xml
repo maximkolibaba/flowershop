@@ -13,6 +13,7 @@
         <spring.version>4.3.10.RELEASE</spring.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <lombok.version>1.16.0</lombok.version>
+        <flyway.version>4.2.0</flyway.version>
     </properties>
 
     <dependencies>
@@ -60,6 +61,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- Flyway -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
 
     </dependencies>

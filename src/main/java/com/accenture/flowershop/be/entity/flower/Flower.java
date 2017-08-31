@@ -1,7 +1,7 @@
 package com.accenture.flowershop.be.entity.flower;
 
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,4 +29,6 @@ public class Flower {
 //    @Setter
 //    @Column(name = "amount", nullable = false)
     private Integer amount;
+
+    public Flower() {}
 }
