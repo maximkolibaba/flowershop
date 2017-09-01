@@ -19,3 +19,4 @@
               validationQuery="Select 1 From dual"
               maxWait="-1"/>
 </Context>
+<!--TODO: поставить conf.properties -->

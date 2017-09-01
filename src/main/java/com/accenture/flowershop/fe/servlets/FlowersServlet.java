@@ -23,13 +23,8 @@ public class FlowersServlet extends HttpServlet {
 
         String result = "";
         List<Flower> flowers = dao.getAll();
-        for (Flower flower : flowers) {
-            result += "<br/>" + flower.getId() + " " + flower.getName();
-        }
-        result = "Flowers: " + result;
 
-        resp.setContentType("text/html");
-
-        resp.getWriter().print("<html><body><h2>" + result + "</h2></body></html>");
+        req.setAttribute("flowers", flowers);
+        req.getRequestDispatcher("/flowers.jsp").forward(req, resp);
     }
 }

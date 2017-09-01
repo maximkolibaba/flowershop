@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/my.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
 
@@ -32,7 +32,7 @@
 
         <button type="submit" class="btn btn-default">Register</button>
 
-        <br/>
+        <br/><br/><br/>
 
         <a href="/flowers" type="submit" class="btn btn-default">View all flowers</a>
 
