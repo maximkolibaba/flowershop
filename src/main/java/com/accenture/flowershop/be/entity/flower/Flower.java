@@ -1,34 +1,26 @@
 package com.accenture.flowershop.be.entity.flower;
 
-//import lombok.Getter;
-//import lombok.Setter;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity//(name = "Flower")
-//@Table(name = "tb_flower")
+@Entity
 public class Flower {
     @Id
     @GeneratedValue
-//    @Getter
-//    @Column(name = "id", nullable = false)
+    @Getter
     private Long id;
 
-//    @Getter
-//    @Setter
-//    @Column(name = "name", nullable = false)
+    @Getter
     private String name;
 
-//    @Getter
-//    @Setter
-//    @Column(name = "price", nullable = false)
+    @Getter
     private BigDecimal price;
 
-//    @Getter
-//    @Setter
-//    @Column(name = "amount", nullable = false)
+    @Getter
     private Integer amount;
 
-    public Flower() {}
+    public Flower() {
+    }
 }

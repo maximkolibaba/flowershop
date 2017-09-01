@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/jee
         http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <jee:jndi-lookup id="dbDataSource" jndi-name="jdbc/flowershop" expected-type="javax.sql.DataSource"/>
+    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowershop" expected-type="javax.sql.DataSource"/>
 
     <context:annotation-config/>
     <context:component-scan base-package="com.accenture.flowershop"/>
@@ -22,7 +22,7 @@
     <!--import resource="classpath*:common-services.xml"/-->
 
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
-        <property name="dataSource" ref="dbDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="locations">
             <array>
                 <value>dbscripts</value>
@@ -38,7 +38,7 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           depends-on="flyway">
-        <property name="dataSource" ref="dbDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
             <list>
                 <value>com.accenture.flowershop.be.entity</value>
@@ -46,7 +46,7 @@
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="ORACLE"/> <!-- h2? -->
+                <property name="database" value="H2"/> <!-- h2? -->
                 <property name="generateDdl" value="false"/>
                 <property name="showSql" value="true"/>
             </bean>

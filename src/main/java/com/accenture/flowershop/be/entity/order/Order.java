@@ -1,8 +1,10 @@
 package com.accenture.flowershop.be.entity.order;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.accenture.flowershop.be.entity.user.User;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -10,7 +12,16 @@ public class Order {
     @Id
     @GeneratedValue
     private Long id;
-    private List<OrderItem> items;
-    //cymma
-    //IO3epaugu
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    private Date createDate;
+    private Date completeDate;
+    private BigDecimal total;
+    private OrderStatus orderStatus;
+
+    public Order() {
+    }
 }

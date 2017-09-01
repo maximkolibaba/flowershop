@@ -15,13 +15,14 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "orderId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Order order;    //private Long orderId;
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "flowerId")
-    private Flower flower;  //private Long flowerId;
+    private Flower flower;
 
     private int amount;
 
-    public OrderItem() { }
+    public OrderItem() {
+    }
 }
