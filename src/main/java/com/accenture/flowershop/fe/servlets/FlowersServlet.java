@@ -16,11 +16,22 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/flowers")
 public class FlowersServlet extends HttpServlet {
+//    @Override
+//    public void init() throws ServletException {
+//        super.init();
+//    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO is it good?
+        doGet(req, resp);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
         FlowerDAO dao = context.getBean(FlowerDAOImpl.class);
-
         String result = "";
         List<Flower> flowers = dao.getAll();
 

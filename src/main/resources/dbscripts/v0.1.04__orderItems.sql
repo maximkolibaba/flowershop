@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS ORDERITEM (
   orderId  BIGINT,
   flowerId BIGINT,
   amount   INT,
+  subTotal DECIMAL,
   FOREIGN KEY (orderId) REFERENCES "ORDER" (id),
   FOREIGN KEY (flowerId) REFERENCES FLOWER (id)
 );

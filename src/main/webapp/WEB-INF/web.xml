@@ -21,6 +21,10 @@
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
+    
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
 
     <!--<servlet>-->
         <!--<servlet-name>flowersServlet</servlet-name>-->

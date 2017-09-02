@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7,7 +5,7 @@
     <title>Sign up</title>
     <meta http-equiv="content-type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
@@ -17,24 +15,28 @@
     <h2>Flower Shop</h2>
     <br/>
 
-    <form>
+    <form method="post" action="login">
         <div class="form-group">
             <label for="inputLogin">Email address</label>
-            <input type="text" class="form-control" id="inputLogin" placeholder="Login">
+            <input type="text" class="form-control" id="inputLogin" name="login" placeholder="Login">
         </div>
 
         <div class="form-group">
             <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
         </div>
 
-        <button type="submit" class="btn btn-default">Login</button>
+        <%--todo return true if user is logged correctly--%>
+        <%--<c:if test="${}"--%>
+
+        <%--<button type="submit" class="btn btn-default">Login</button>--%>
+        <input type="submit" class="btn btn-default" value="Login">
 
         <button type="submit" class="btn btn-default">Register</button>
 
         <br/><br/><br/>
 
-        <a href="/flowers" type="submit" class="btn btn-default">View all flowers</a>
+        <a href="flowers" type="submit" class="btn btn-default">View all flowers</a>
 
     </form>
 

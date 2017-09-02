@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class OrderItem {
@@ -22,6 +23,7 @@ public class OrderItem {
     private Flower flower;
 
     private int amount;
+    private BigDecimal subTotal;
 
     public OrderItem() {
     }
