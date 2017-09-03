@@ -21,13 +21,6 @@ public class FlowersServlet extends HttpServlet {
 //        super.init();
 //    }
 
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO is it good?
-        doGet(req, resp);
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
