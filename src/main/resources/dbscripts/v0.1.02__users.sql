@@ -9,3 +9,6 @@ CREATE TABLE IF NOT EXISTS USER (
   balance   DECIMAL,
   discount  INT
 );
+
+INSERT INTO USER (firstName, lastName, login, password, userType, address, balance, discount)
+VALUES ('admin', 'admin', 'admin', 'admin123', 'ADMIN', 'admin', 9999, 99);

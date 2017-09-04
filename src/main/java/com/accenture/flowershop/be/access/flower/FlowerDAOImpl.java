@@ -4,6 +4,7 @@ import com.accenture.flowershop.be.entity.flower.Flower;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -28,8 +29,12 @@ public class FlowerDAOImpl implements FlowerDAO {
         return flower;
     }
 
-    // TODO: implement flowerdao.update()
     public Flower update(Flower flower) {
-        return null;
+        try {
+            entityManager.merge(flower);
+            return flower;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

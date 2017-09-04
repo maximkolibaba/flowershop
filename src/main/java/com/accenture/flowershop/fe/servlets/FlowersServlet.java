@@ -1,11 +1,11 @@
 package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.access.flower.FlowerDAO;
-import com.accenture.flowershop.be.access.flower.FlowerDAOImpl;
 import com.accenture.flowershop.be.entity.flower.Flower;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,16 +16,17 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/flowers")
 public class FlowersServlet extends HttpServlet {
-//    @Override
-//    public void init() throws ServletException {
-//        super.init();
-//    }
+    @Autowired
+    private FlowerDAO dao;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
-        FlowerDAO dao = context.getBean(FlowerDAOImpl.class);
-        String result = "";
         List<Flower> flowers = dao.getAll();
 
         req.setAttribute("flowers", flowers);

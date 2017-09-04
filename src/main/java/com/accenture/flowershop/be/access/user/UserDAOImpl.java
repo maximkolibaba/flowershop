@@ -1,14 +1,14 @@
 package com.accenture.flowershop.be.access.user;
 
 import com.accenture.flowershop.be.entity.user.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-@Component
+@Repository
 public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -23,11 +23,21 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public boolean create(User user) {
-        return false;
+    public User create(User user) {
+        try {
+            entityManager.persist(user);
+            return user;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     public User update(User user) {
-        return null;
+        try {
+            entityManager.merge(user);
+            return user;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

@@ -3,7 +3,8 @@
 <%
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    response.setDateHeader("Expires", -1);
+    response.setDateHeader("Expires", 0);
+//    response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 %>
 
 <!DOCTYPE html>
@@ -44,10 +45,14 @@
             <br/>
         </c:if>
 
-        <input type="submit" class="btn btn-default" value="Login">
+        <input type="submit" class="btn btn-default" value="Sign In">
 
-        <a href="flowers" class="btn btn-default">Register</a>
-        <%--todo register--%>
+        <a href="register" class="btn btn-default">Register</a>
+
+        <%
+            request.getSession(false).removeAttribute("isLoggedIn");
+        %>
+
     </form>
 
 </div>

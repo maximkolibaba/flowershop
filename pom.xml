@@ -80,7 +80,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -109,6 +109,12 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>1.4.196</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
