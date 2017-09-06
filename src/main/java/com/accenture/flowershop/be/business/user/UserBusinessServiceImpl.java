@@ -46,7 +46,7 @@ public class UserBusinessServiceImpl implements UserBusinessService {
             results.add(UserRegisterResult.INCOMPLETE_USER_INFO);
         }
 
-        if (results.size() == 0) {
+        if (results.isEmpty()) {
             User user = new User(login, password, firstName, lastName, address);
             if (dao.create(user) != null) {
                 results.add(UserRegisterResult.SUCCESS);

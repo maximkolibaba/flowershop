@@ -26,14 +26,4 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!--<servlet>-->
-        <!--<servlet-name>flowersServlet</servlet-name>-->
-        <!--<servlet-class>com.accenture.flowershop.fe.servlets.FlowersServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!---->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>flowersServlet</servlet-name>-->
-        <!--<url-pattern>/flowers</url-pattern>-->
-    <!--</servlet-mapping>-->
-
 </web-app>

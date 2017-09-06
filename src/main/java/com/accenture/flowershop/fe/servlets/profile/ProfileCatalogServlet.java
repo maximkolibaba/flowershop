@@ -1,4 +1,4 @@
-package com.accenture.flowershop.fe.servlets;
+package com.accenture.flowershop.fe.servlets.profile;
 
 import com.accenture.flowershop.be.access.flower.FlowerDAO;
 import com.accenture.flowershop.be.entity.flower.Flower;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/flowers")
-public class FlowersServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/profile/catalog")
+public class ProfileCatalogServlet extends HttpServlet {
     @Autowired
     private FlowerDAO dao;
 
@@ -29,6 +29,6 @@ public class FlowersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Flower> flowers = dao.getAll();
         req.setAttribute("flowers", flowers);
-        req.getRequestDispatcher("/flowers.jsp").forward(req, resp);
+        req.getRequestDispatcher("../pages/profile/catalog.jsp").forward(req, resp);
     }
 }

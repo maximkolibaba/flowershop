@@ -18,15 +18,34 @@ import java.util.List;
 public class RegisterServlet extends HttpServlet {
     @Autowired
     private UserBusinessService service;
+    private boolean success;
+
+//    private void setSuccess(Boolean b) {
+//        success = b == null ? false : b;
+//    }
+
+    //private boolean getSuccess() {
+    //    return success;
+    //}
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+        success = false;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Boolean b = (Boolean) req.getSession(false).getAttribute("success");
+        boolean success = b == null ? false : b;
+
+        if (success) {
+            req.getSession(false).setAttribute("success", false);
+            resp.sendRedirect("login");
+            return;
+        }
+
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String firstName = req.getParameter("firstName");
@@ -34,16 +53,15 @@ public class RegisterServlet extends HttpServlet {
         String address = req.getParameter("address");
 
         List<UserRegisterResult> results = service.register(login, password, firstName, lastName, address);
+        success = results.contains(UserRegisterResult.SUCCESS);
+        req.getSession().setAttribute("success", success);
 
-        if (results.contains(UserRegisterResult.SUCCESS)) {
-            resp.sendRedirect("successfulRegister.html");
-            return;
+        if (!success) {
+            req.getSession().setAttribute("noLogin", results.contains(UserRegisterResult.NO_LOGIN));
+            req.getSession().setAttribute("noPassword", results.contains(UserRegisterResult.NO_PASSWORD));
+            req.getSession().setAttribute("loginIsUsed", results.contains(UserRegisterResult.LOGIN_IS_USED));
+            req.getSession().setAttribute("notFullInfo", results.contains(UserRegisterResult.INCOMPLETE_USER_INFO));
         }
-
-        req.getSession().setAttribute("noLogin", results.contains(UserRegisterResult.NO_LOGIN));
-        req.getSession().setAttribute("noPassword", results.contains(UserRegisterResult.NO_PASSWORD));
-        req.getSession().setAttribute("loginIsUsed", results.contains(UserRegisterResult.LOGIN_IS_USED));
-        req.getSession().setAttribute("notFullInfo", results.contains(UserRegisterResult.INCOMPLETE_USER_INFO));
 
         resp.sendRedirect("register");
     }
