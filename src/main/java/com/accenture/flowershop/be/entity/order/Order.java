@@ -41,4 +41,13 @@ public class Order {
 
     public Order() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean flag = false;
+        if (o != null && o instanceof Order) {
+            flag = this.id == ((Order) o).getId();
+        }
+        return flag;
+    }
 }

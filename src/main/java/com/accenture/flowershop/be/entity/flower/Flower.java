@@ -28,4 +28,21 @@ public class Flower {
 
     public Flower() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean flag = false;
+        if (o != null && o instanceof Flower) {
+            flag = this.id == ((Flower) o).getId();
+        }
+        return flag;
+    }
+
+//public boolean equals(Flower flower) {
+    //    return this.id == flower.getId();
+    //}
+//
+    //public boolean equals(Long id){
+    //    return this.id == id;
+    //}
 }

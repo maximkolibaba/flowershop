@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
     response.setHeader("Pragma", "No-cache");
@@ -50,12 +51,7 @@
 
         <input type="submit" class="btn btn-primary" value="Sign In">
 
-        <%--<form action="register">--%>
-            <%--<input type="submit" class="btn btn-secondary" value="Register">--%>
-        <%--</form>--%>
-
         <input type="submit" class="btn btn-secondary" value="Register" name="buttonRegister">
-        <%--<a href="register" class="btn btn-secondary" role="button">Register</a>--%>
 
         <%
             request.getSession(false).removeAttribute("correctLogIn");

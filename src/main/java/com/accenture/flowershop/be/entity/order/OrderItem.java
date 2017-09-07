@@ -31,7 +31,7 @@ public class OrderItem {
     private Flower flower;
 
     @Getter
-    @Setter
+//    @Setter
     private int amount;
 
     @Getter
@@ -39,5 +39,36 @@ public class OrderItem {
     private BigDecimal subTotal;
 
     public OrderItem() {
+    }
+
+    public OrderItem(Flower flower, int amount) {
+        this.flower = flower;
+        setAmount(amount); // includes subTotal
+    }
+
+    public String getFlowerName() {
+        return flower.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean flag = false;
+
+        if (o != null && o instanceof OrderItem) {
+            if (this.order == null) {
+                // it is cart item which has no order
+                flag = ((OrderItem) o).getOrder() == null
+                        && ((OrderItem) o).getFlowerName() == this.getFlowerName();
+            } else {
+                // it is ordered flowers
+                flag = this.id == ((OrderItem) o).getId();
+            }
+        }
+        return flag;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+        this.subTotal = flower.getPrice().multiply(new BigDecimal(amount));
     }
 }

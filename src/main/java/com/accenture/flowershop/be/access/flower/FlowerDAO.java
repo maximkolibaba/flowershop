@@ -8,6 +8,8 @@ import java.util.List;
 public interface FlowerDAO {
     List<Flower> getAll();
 
+    int getCount();
+
     Flower getById(Long id);
 
     @Transactional

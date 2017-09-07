@@ -3,10 +3,7 @@ package com.accenture.flowershop.be.access.flower;
 import com.accenture.flowershop.be.entity.flower.Flower;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 @Component
@@ -15,18 +12,33 @@ public class FlowerDAOImpl implements FlowerDAO {
     private EntityManager entityManager;
 
     public List<Flower> getAll() {
-        TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f", Flower.class);
-        List<Flower> flowers = query.getResultList();
+        try {
+            TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f", Flower.class);
+            List<Flower> flowers = query.getResultList();
+            return flowers;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 
-        return flowers;
+    public int getCount() {
+        try {
+            Query query = entityManager.createQuery("select count(f) from Flower f");
+            return (Integer) query.getSingleResult();
+        } catch (NoResultException ex) {
+            return 0;
+        }
     }
 
     public Flower getById(Long id) {
-        TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f where f.id=:id", Flower.class);
-        query.setParameter("id", id);
-        Flower flower = query.getSingleResult();
-
-        return flower;
+        try {
+            TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f where f.id=:id", Flower.class);
+            query.setParameter("id", id);
+            Flower flower = query.getSingleResult();
+            return flower;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     public Flower update(Flower flower) {

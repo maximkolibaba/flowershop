@@ -47,23 +47,30 @@
 
     <br/>
 
-    <form>
+    <form action="/profile/catalog" method="post">
         <table class="table">
             <tr>
-                <th>ID</th>
+                <%--<th>ID</th>--%>
                 <th>Name</th>
-                <th>Price</th>
-                <th>Amount</th>
+                <th>Price, RUB</th>
+                <th>In stock, pcs.</th>
+                <th>To order</th>
             </tr>
-            <c:forEach items="${flowers}" var="iter" varStatus="rowStatus">
+            <c:forEach items="${flowers}" var="item" varStatus="rowStatus">
                 <tr>
-                    <td>${iter.id}</td>
-                    <td>${iter.name}</td>
-                    <td>${iter.price}</td>
-                    <td>${iter.amount}</td>
+                        <%--<td>${iter.id}</td>--%>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td>${item.amount}</td>
+                    <td>
+                        <input type="number" class="form-control" name="${item.id}" min="0" max="${item.amount}"
+                               value="0">
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+
+        <input type="submit" class="btn btn-primary" value="Add to cart">
     </form>
 
 </div>

@@ -12,7 +12,7 @@ public interface OrderDAO {
     Order getById(Long id);
 
     @Transactional
-    boolean create(Order order);
+    Order create(Order order);
 
     @Transactional
     Order update(Order order);
