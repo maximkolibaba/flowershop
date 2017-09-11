@@ -8,7 +8,6 @@
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", 0);
-//    response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 %>
 
 <!DOCTYPE html>
@@ -30,25 +29,12 @@
     <br/>
 
     <%
-        //Boolean flag = (Boolean) request.getSession(false).getAttribute("isLoggedIn");
-        //if (flag == null || !flag) {
-        //    response.sendRedirect("../../index.jsp");
-        //    return;
-        //}
-        //Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
-        //if (isAdmin == null) {
-        //    request.getRequestDispatcher("login.jsp").forward(req, resp);
-        //} else if (isAdmin) {
-        //    request.sendRedirect("admin");
-        //} else {
-        //    request.sendRedirect("profile");
-        //}
         Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
         if (isAdmin == null) {
             response.sendRedirect("../../index.jsp");
             return;
         } else if (isAdmin) {
-            response.sendRedirect("admin");
+            response.sendRedirect("/admin");
             return;
         }
     %>
@@ -71,7 +57,6 @@
             int discount = user.getDiscount();
             BigDecimal priceWDisc = total.multiply(new BigDecimal(1 - (double) (discount) / 100));
             priceWDisc = priceWDisc.setScale(2, BigDecimal.ROUND_HALF_UP);
-            boolean enoughMoney = user.getBalance().compareTo(priceWDisc) != -1;
     %>
     <form action="/profile/cart" method="post">
         <table class="table">
@@ -81,7 +66,6 @@
                 <th>Price, RUB</th>
                 <th></th>
             </tr>
-            <%--<c:forEach var="item" items="${cart.items}" varStatus="rowStatus">--%>
             <% for (CartItem item : cart) { %>
                 <tr>
                     <td><%= item.getFlowerName() %></td>
@@ -91,24 +75,9 @@
                         <input type="submit" class="btn btn-outline-danger btn-sm" value="Remove"
                                name='<%= "remove" + item.getFlowerName() %>'/>
                     </td>
-                    <%--<td>${item.flower.name}</td>--%>
-                    <%--<td>${item.amount}</td>--%>
-                    <%--<td>${item.total}</td>--%>
-                    <%--<td>--%>
-                        <%--<input type="submit" class="btn btn-outline-danger btn-sm" value="Remove"--%>
-                               <%--name="remove${item.flower.name}"/>--%>
-                    <%--</td>--%>
                 </tr>
             <% } %>
-            <%--</c:forEach>--%>
         </table>
-
-        <%-- TODO: check money in order --%>
-        <%-- TODO: check amount in catalog and cart --%>
-
-        <%--<% if (!enoughMoney) { %>--%>
-        <%--<div style="color:orangered">You do not have enough money to order this.</div>--%>
-        <%--<% } %>--%>
 
         <br/>Total price without discount: <%= total %> RUB
         <br/>Your discount: <%= discount %>%
@@ -117,12 +86,6 @@
         <br/><br/>
 
         <input type="submit" class="btn btn-primary" value="Order" name="buttonOrder"/>
-
-        <%--<% if (enoughMoney) { %>--%>
-            <%--<input type="submit" class="btn btn-primary" value="Order" name="buttonOrder"/>--%>
-        <%--<% } else { %>--%>
-            <%--<input class="btn btn-primary" value="Order" disabled/>--%>
-        <%--<% } %>--%>
 
     </form>
 

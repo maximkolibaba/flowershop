@@ -21,15 +21,6 @@ public class FlowerDAOImpl implements FlowerDAO {
         }
     }
 
-    public int getCount() {
-        try {
-            Query query = entityManager.createQuery("select count(f) from Flower f");
-            return (Integer) query.getSingleResult();
-        } catch (NoResultException ex) {
-            return 0;
-        }
-    }
-
     public Flower getById(Long id) {
         try {
             TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f where f.id=:id", Flower.class);

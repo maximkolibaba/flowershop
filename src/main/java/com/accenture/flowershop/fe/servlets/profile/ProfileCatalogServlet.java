@@ -41,10 +41,6 @@ public class ProfileCatalogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        //Cart cart = (Cart) session.getAttribute("cart");
-        //if (cart == null) {
-        //    cart = new Cart();
-        //}
         Cart cart = new Cart((Cart) session.getAttribute("cart"));
         List<Flower> flowers = service.getAllFlowers();
 

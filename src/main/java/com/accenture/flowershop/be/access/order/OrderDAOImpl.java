@@ -14,7 +14,6 @@ import java.util.List;
 public class OrderDAOImpl implements OrderDAO {
     @PersistenceContext
     private EntityManager entityManager;
-    private EntityManager entityManager1;
 
     public List<Order> getAll() {
         try {

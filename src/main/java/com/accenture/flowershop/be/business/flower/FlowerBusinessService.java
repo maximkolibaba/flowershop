@@ -7,11 +7,5 @@ import java.util.List;
 public interface FlowerBusinessService {
     List<Flower> getAllFlowers();
 
-    Flower getById(long id);
-
-    int flowersCount();
-
-    boolean haveAmount(long id, int amount);
-
     Flower order(Flower flower, int amount);
 }

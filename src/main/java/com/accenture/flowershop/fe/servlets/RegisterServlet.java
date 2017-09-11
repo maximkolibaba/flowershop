@@ -18,21 +18,11 @@ import java.util.List;
 public class RegisterServlet extends HttpServlet {
     @Autowired
     private UserBusinessService service;
-    private boolean success;
-
-//    private void setSuccess(Boolean b) {
-//        success = b == null ? false : b;
-//    }
-
-    //private boolean getSuccess() {
-    //    return success;
-    //}
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
-        success = false;
     }
 
     @Override

@@ -1,9 +1,6 @@
 <%@ page import="com.accenture.flowershop.be.entity.order.Order" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.accenture.flowershop.be.entity.user.User" %>
 <%@ page import="com.accenture.flowershop.be.entity.order.OrderStatus" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Collections" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -42,7 +39,6 @@
             response.sendRedirect("../../index.jsp");
             return;
         }
-// TODO : fix redirect on all pages. /profile/info throwing to /profile/admin not to /admin
     %>
 
     <form action="/profile" method="post">

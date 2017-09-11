@@ -1,12 +1,9 @@
-<%@ page import="com.sun.org.apache.xpath.internal.operations.Bool" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--<%@page session='false' %>--%>
-
 <%
-    //    response.setHeader("Pragma", "No-cache");
-//    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-//    response.setDateHeader("Expires", -1);
+    response.setHeader("Pragma", "No-cache");
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setDateHeader("Expires", 0);
 %>
 
 <!DOCTYPE html>

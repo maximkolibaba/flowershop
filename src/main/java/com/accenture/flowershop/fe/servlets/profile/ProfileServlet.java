@@ -20,7 +20,6 @@ public class ProfileServlet extends HttpServlet {
         } else if (req.getParameter("buttonCart") != null) {
             resp.sendRedirect("/profile/cart");
         } else if (req.getParameter("buttonLogout") != null) {
-//            req.getSession(false).setAttribute("isLoggedIn", false);
             req.getSession(false).invalidate();
             resp.sendRedirect("index.jsp");
         } else {

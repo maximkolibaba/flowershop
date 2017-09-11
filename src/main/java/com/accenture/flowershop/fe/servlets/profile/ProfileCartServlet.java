@@ -38,29 +38,12 @@ public class ProfileCartServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             Order order = service.createOrder(cart, user);
             if (order != null) {
-                //List<Order> orders = (List<Order>) session.getAttribute("orders");
-                //if (orders == null) {
-                //    orders = new ArrayList<Order>();
-                //}
-                //orders.add(order);
-                //session.setAttribute("orders", orders);
                 cart.clear();
                 req.getSession(false).setAttribute("cart", cart);
                 resp.sendRedirect("/profile/orders");
                 return;
             }
-
-            //// TODO: and error "not enough flowers"
-            //User user = (User) session.getAttribute("user");
-            //BigDecimal priceToPay = cart.getTotal()
-            //        .multiply(new BigDecimal(1 - (double) (user.getDiscount()) / 100));
-            //if (user.getBalance().compareTo(priceToPay) == -1) {
-            //    session.setAttribute("notEnoughMoney", true);
-            //} else {
-            //    // TODO order this and redirect to order page
-            //}
         } else {
-//            for (CartItem item : cart.getItems()) {
             for (CartItem item : cart) {
                 if (req.getParameter("remove" + item.getFlowerName()) != null) {
                     cart.removeFromCart(item);

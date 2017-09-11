@@ -17,25 +17,8 @@ public class FlowerBusinessServiceImpl implements FlowerBusinessService {
         return dao.getAll();
     }
 
-    public Flower getById(long id) {
-        return dao.getById(id);
-    }
-
-    public int flowersCount() {
-        return dao.getAll().size();
-    }
-
-    public boolean haveAmount(long id, int amount) {
-        Flower flower = dao.getById(id);
-        return flower != null && flower.getAmount() >= amount;
-    }
-
     public Flower order(Flower flower, int amount) {
         flower.setAmount(flower.getAmount() - amount);
         return dao.update(flower);
     }
-
-//    public Flower order(long id, int amount) {
-//        if ()
-//    }
 }

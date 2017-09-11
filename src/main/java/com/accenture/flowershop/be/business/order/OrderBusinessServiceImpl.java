@@ -31,9 +31,6 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
     @Autowired
     private FlowerDAO flowerDAO;
 
-    @Autowired
-    private UserDAO userDAO;
-
     public List<Order> getAllOrders() {
         return orderDAO.getAll();
     }
@@ -69,10 +66,6 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         }
 
         return orderDAO.delete(order);
-    }
-
-    public boolean cancelOrder(Long id) {
-        return this.cancelOrder(orderDAO.getById(id));
     }
 
     public Order setStatus(Order order, OrderStatus status) {

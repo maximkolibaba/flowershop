@@ -3,7 +3,6 @@ package com.accenture.flowershop.be.entity.order;
 import com.accenture.flowershop.be.entity.flower.Flower;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -45,7 +44,7 @@ public class OrderItem {
     public OrderItem(Order order, Flower flower, int amount) {
         this.order = order;
         this.flower = flower;
-        setAmount(amount); // includes subTotal
+        setAmount(amount);
     }
 
     public void setAmount(int amount) {
@@ -53,24 +52,9 @@ public class OrderItem {
         this.subTotal = flower.getPrice().multiply(new BigDecimal(amount));
     }
 
-    public String getFlowerName() {
-        return flower.getName();
-    }
-
     @Override
     public boolean equals(Object o) {
         boolean flag = false;
-
-        //if (o != null && o instanceof OrderItem) {
-        //    if (this.order == null) {
-        //        // it is cart item which has no order
-        //        flag = ((OrderItem) o).getOrder() == null
-        //                && ((OrderItem) o).getFlowerName() == this.getFlowerName();
-        //    } else {
-        //        // it is ordered flowers
-        //        flag = this.id == ((OrderItem) o).getId();
-        //    }
-        //}
         if (o != null && o instanceof OrderItem) {
             flag = this.id == ((OrderItem) o).id;
         }

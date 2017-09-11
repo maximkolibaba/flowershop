@@ -1,7 +1,5 @@
 package com.accenture.flowershop.be.business.order;
 
-//    todo make order repository not dao or mb later
-
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.order.OrderStatus;
 import com.accenture.flowershop.be.entity.user.User;
@@ -15,8 +13,6 @@ public interface OrderBusinessService {
     Order createOrder(Cart cart, User user);
 
     boolean cancelOrder(Order order);
-
-    boolean cancelOrder(Long id);
 
     Order setStatus(Order order, OrderStatus status);
 

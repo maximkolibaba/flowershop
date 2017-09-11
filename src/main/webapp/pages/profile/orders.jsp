@@ -8,7 +8,6 @@
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", 0);
-//    response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 %>
 
 <!DOCTYPE html>
@@ -30,29 +29,12 @@
     <br/>
 
     <%
-//        try {
-//            if (!(Boolean) request.getSession(false).getAttribute("isLoggedIn")) {
-//                response.sendRedirect("../../index.jsp");
-//                return;
-//            }
-//        } catch (NullPointerException ex) {
-//            response.sendRedirect("../../index.jsp");
-//            return;
-//        }
-        //Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
-        //if (isAdmin == null) {
-        //    request.getRequestDispatcher("login.jsp").forward(req, resp);
-        //} else if (isAdmin) {
-        //    request.sendRedirect("admin");
-        //} else {
-        //    request.sendRedirect("profile");
-        //}
         Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
         if (isAdmin == null) {
             response.sendRedirect("../../index.jsp");
             return;
         } else if (isAdmin) {
-            response.sendRedirect("admin");
+            response.sendRedirect("/admin");
             return;
         }
     %>
@@ -89,7 +71,6 @@
 
             <%
                 for (Order order : orders) {
-//                    boolean hvAmount = TODO: in cart
                     boolean haveMoney = order.getTotal().compareTo(user.getBalance()) != 1;
             %>
 

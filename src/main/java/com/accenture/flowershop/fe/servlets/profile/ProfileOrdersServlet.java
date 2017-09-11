@@ -39,7 +39,6 @@ public class ProfileOrdersServlet extends HttpServlet {
         for (Order order : orders) {
             if (req.getParameter("p" + order.getId()) != null) {
                 // pay
-//                user.payAnOrder(order);
                 if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
                     user = userService.payOrder(user, order.getTotal());
                     break;
@@ -50,7 +49,7 @@ public class ProfileOrdersServlet extends HttpServlet {
                 break;
             } else if (req.getParameter("d" + order.getId()) != null) {
                 // delivered
-                orderService.setStatus(order,OrderStatus.DELIVERED);
+                orderService.setStatus(order, OrderStatus.DELIVERED);
                 break;
             }
         }

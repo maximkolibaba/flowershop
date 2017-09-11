@@ -37,12 +37,4 @@ public class Flower {
         }
         return flag;
     }
-
-//public boolean equals(Flower flower) {
-    //    return this.id == flower.getId();
-    //}
-//
-    //public boolean equals(Long id){
-    //    return this.id == id;
-    //}
 }

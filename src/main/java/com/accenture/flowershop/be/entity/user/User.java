@@ -14,10 +14,6 @@ public class User {
     @Setter
     private Long id;
 
-    //@Enumerated(EnumType.STRING)
-    //@Getter
-    //@Setter
-    //private UserType userType;
     @Getter
     @Setter
     private Boolean isAdmin;
@@ -54,7 +50,6 @@ public class User {
     }
 
     public User(String login, String password, String firstName, String lastName, String address, BigDecimal balance, Integer discount) {
-        //userType = UserType.CUSTOMER;
         isAdmin = false;
         this.firstName = firstName;
         this.lastName = lastName;

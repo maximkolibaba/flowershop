@@ -4,7 +4,6 @@
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", 0);
-//    response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 %>
 
 <!DOCTYPE html>
@@ -26,30 +25,12 @@
     <br/>
 
     <%
-//        try {
-//            if (!(Boolean) request.getSession(false).getAttribute("isLoggedIn")) {
-//                response.sendRedirect("../../index.jsp");
-//                return;
-//            }
-//        } catch (NullPointerException ex) {
-//            response.sendRedirect("../../index.jsp");
-//            return;
-//        }
-
-        //Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
-        //if (isAdmin == null) {
-        //    request.getRequestDispatcher("login.jsp").forward(req, resp);
-        //} else if (isAdmin) {
-        //    request.sendRedirect("admin");
-        //} else {
-        //    request.sendRedirect("profile");
-        //}
         Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
         if (isAdmin == null) {
             response.sendRedirect("../../index.jsp");
             return;
         } else if (isAdmin) {
-            response.sendRedirect("admin");
+            response.sendRedirect("/admin");
             return;
         }
     %>
@@ -64,12 +45,9 @@
 
     <br/>
 
-    <%-- TODO: add message "not enough items" --%>
-
     <form action="/profile/catalog" method="post">
         <table class="table">
             <tr>
-                <%--<th>ID</th>--%>
                 <th>Name</th>
                 <th>Price, RUB</th>
                 <th>In stock, pcs.</th>
@@ -77,7 +55,6 @@
             </tr>
             <c:forEach items="${flowers}" var="item" varStatus="rowStatus">
                 <tr>
-                        <%--<td>${iter.id}</td>--%>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
                     <td>${item.amount}</td>
