@@ -1,34 +1,30 @@
 package com.accenture.flowershop.fe;
 
-import com.accenture.flowershop.be.entity.flower.Flower;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Cart {
+public class Cart implements Iterable<CartItem> {
     private List<CartItem> items;
 
+    @Getter
     private BigDecimal total;
 
     public Cart() {
-        this.items = new ArrayList<CartItem>();
-        this.total = BigDecimal.ZERO;
-//        this.total = total.setScale(2,BigDecimal.ROUND_HALF_UP);
+        this(null);
     }
 
     public Cart(Cart cart) {
         if (cart != null) {
-            this.items = cart.getItems();
-            this.total = cart.getTotal();
-//            this.total = total.setScale(2,BigDecimal.ROUND_HALF_UP);
+            this.items = cart.items;
+            this.total = cart.total;
         } else {
-//            new Cart();
-            //this.items = new ArrayList<CartItem>();
-            //this.total = BigDecimal.ZERO;
+            this.items = new ArrayList<CartItem>();
+            this.total = BigDecimal.ZERO;
+            this.total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     }
 
@@ -53,22 +49,22 @@ public class Cart {
         return false;
     }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
-
     private void setTotal() {
         total = BigDecimal.ZERO;
-        for (CartItem item : items) {
+        for (CartItem item : this) {
             total = total.add(item.getTotal());
         }
     }
 
-    public List<CartItem> getItems() {
-        return items;
-    }
-
     public boolean isEmpty() {
         return items.isEmpty();
+    }
+
+    public void clear() {
+        items.clear();
+    }
+
+    public Iterator<CartItem> iterator() {
+        return items.iterator();
     }
 }

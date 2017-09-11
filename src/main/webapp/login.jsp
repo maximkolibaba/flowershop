@@ -44,7 +44,7 @@
 
         <c:choose>
             <c:when test="${correctLogIn eq 'false'}">
-                <div style="color:orangered">Incorrect login/password. Please try again or register.</div>
+                <div style="color:#ff4500">Incorrect login/password. Please try again or register.</div>
                 <br/>
             </c:when>
         </c:choose>

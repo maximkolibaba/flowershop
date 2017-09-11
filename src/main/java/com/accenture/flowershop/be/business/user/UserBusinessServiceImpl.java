@@ -5,13 +5,19 @@ import com.accenture.flowershop.be.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class UserBusinessServiceImpl implements UserBusinessService {
     @Autowired
     private UserDAO dao;
+
+    @Autowired
+    private Properties properties;
 
     public User login(String login, String password) {
         if (login.length() == 0 || password.length() == 0) {
@@ -47,12 +53,19 @@ public class UserBusinessServiceImpl implements UserBusinessService {
         }
 
         if (results.isEmpty()) {
-            User user = new User(login, password, firstName, lastName, address);
+            BigDecimal balance = new BigDecimal(properties.getProperty("user.defaultBalance"));
+            Integer discount = Integer.parseInt(properties.getProperty("user.defaultDiscount"));
+            User user = new User(login, password, firstName, lastName, address, balance, discount);
             if (dao.create(user) != null) {
                 results.add(UserRegisterResult.SUCCESS);
             }
         }
 
         return results;
+    }
+
+    public User payOrder(User user, BigDecimal price) {
+        user.setBalance(user.getBalance().subtract(price));
+        return dao.update(user);
     }
 }

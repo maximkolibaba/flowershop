@@ -1,6 +1,7 @@
 <%@ page import="com.accenture.flowershop.fe.Cart" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="com.accenture.flowershop.be.entity.user.User" %>
+<%@ page import="com.accenture.flowershop.fe.CartItem" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
@@ -29,9 +30,25 @@
     <br/>
 
     <%
-        Boolean flag = (Boolean) request.getSession(false).getAttribute("isLoggedIn");
-        if (flag == null || !flag) {
+        //Boolean flag = (Boolean) request.getSession(false).getAttribute("isLoggedIn");
+        //if (flag == null || !flag) {
+        //    response.sendRedirect("../../index.jsp");
+        //    return;
+        //}
+        //Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
+        //if (isAdmin == null) {
+        //    request.getRequestDispatcher("login.jsp").forward(req, resp);
+        //} else if (isAdmin) {
+        //    request.sendRedirect("admin");
+        //} else {
+        //    request.sendRedirect("profile");
+        //}
+        Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
+        if (isAdmin == null) {
             response.sendRedirect("../../index.jsp");
+            return;
+        } else if (isAdmin) {
+            response.sendRedirect("admin");
             return;
         }
     %>
@@ -64,22 +81,34 @@
                 <th>Price, RUB</th>
                 <th></th>
             </tr>
-            <c:forEach var="item" items="${cart.items}" varStatus="rowStatus">
+            <%--<c:forEach var="item" items="${cart.items}" varStatus="rowStatus">--%>
+            <% for (CartItem item : cart) { %>
                 <tr>
-                    <td>${item.flower.name}</td>
-                    <td>${item.amount}</td>
-                    <td>${item.total}</td>
+                    <td><%= item.getFlowerName() %></td>
+                    <td><%= item.getAmount() %></td>
+                    <td><%= item.getTotal() %></td>
                     <td>
                         <input type="submit" class="btn btn-outline-danger btn-sm" value="Remove"
-                               name="remove${item.flower.name}"/>
+                               name='<%= "remove" + item.getFlowerName() %>'/>
                     </td>
+                    <%--<td>${item.flower.name}</td>--%>
+                    <%--<td>${item.amount}</td>--%>
+                    <%--<td>${item.total}</td>--%>
+                    <%--<td>--%>
+                        <%--<input type="submit" class="btn btn-outline-danger btn-sm" value="Remove"--%>
+                               <%--name="remove${item.flower.name}"/>--%>
+                    <%--</td>--%>
                 </tr>
-            </c:forEach>
+            <% } %>
+            <%--</c:forEach>--%>
         </table>
 
-        <% if (!enoughMoney) { %>
-        <div style="color:orangered">You do not have enough money to order this.</div>
-        <% } %>
+        <%-- TODO: check money in order --%>
+        <%-- TODO: check amount in catalog and cart --%>
+
+        <%--<% if (!enoughMoney) { %>--%>
+        <%--<div style="color:orangered">You do not have enough money to order this.</div>--%>
+        <%--<% } %>--%>
 
         <br/>Total price without discount: <%= total %> RUB
         <br/>Your discount: <%= discount %>%
@@ -87,11 +116,13 @@
 
         <br/><br/>
 
-        <% if (enoughMoney) { %>
-            <input type="submit" class="btn btn-primary" value="Order" name="buttonOrder"/>
-        <% } else { %>
-            <input type="submit" class="btn btn-primary" value="Order" name="buttonOrder" disabled/>
-        <% } %>
+        <input type="submit" class="btn btn-primary" value="Order" name="buttonOrder"/>
+
+        <%--<% if (enoughMoney) { %>--%>
+            <%--<input type="submit" class="btn btn-primary" value="Order" name="buttonOrder"/>--%>
+        <%--<% } else { %>--%>
+            <%--<input class="btn btn-primary" value="Order" disabled/>--%>
+        <%--<% } %>--%>
 
     </form>
 

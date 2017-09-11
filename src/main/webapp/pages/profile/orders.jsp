@@ -1,4 +1,7 @@
+<%@ page import="com.accenture.flowershop.be.entity.order.Order" %>
+<%@ page import="java.util.List" %>
 <%@ page import="com.accenture.flowershop.be.entity.user.User" %>
+<%@ page import="com.accenture.flowershop.be.entity.order.OrderStatus" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
@@ -27,13 +30,29 @@
     <br/>
 
     <%
-        try {
-            if (!(Boolean) request.getSession(false).getAttribute("isLoggedIn")) {
-                response.sendRedirect("../../index.jsp");
-                return;
-            }
-        } catch (NullPointerException ex) {
+//        try {
+//            if (!(Boolean) request.getSession(false).getAttribute("isLoggedIn")) {
+//                response.sendRedirect("../../index.jsp");
+//                return;
+//            }
+//        } catch (NullPointerException ex) {
+//            response.sendRedirect("../../index.jsp");
+//            return;
+//        }
+        //Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
+        //if (isAdmin == null) {
+        //    request.getRequestDispatcher("login.jsp").forward(req, resp);
+        //} else if (isAdmin) {
+        //    request.sendRedirect("admin");
+        //} else {
+        //    request.sendRedirect("profile");
+        //}
+        Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
+        if (isAdmin == null) {
             response.sendRedirect("../../index.jsp");
+            return;
+        } else if (isAdmin) {
+            response.sendRedirect("admin");
             return;
         }
     %>
@@ -45,6 +64,76 @@
         <input type="submit" name="buttonCart" class="btn btn-outline-info" value="Cart"/>
         <input type="submit" name="buttonLogout" class="btn btn-outline-danger" value="Logout"/>
     </form>
+
+    <br/>
+
+    <%
+        List<Order> orders = (List<Order>) request.getSession(false).getAttribute("orders");
+        User user = (User) request.getSession(false).getAttribute("user");
+        if (orders == null || orders.isEmpty()) {
+    %>
+
+    You have no orders :(
+
+    <% } else { %>
+
+    <form action="/profile/orders" method="post">
+        <table class="table">
+            <tr>
+                <th>Order ID</th>
+                <th>Total price, RUB</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <%
+                for (Order order : orders) {
+//                    boolean hvAmount = TODO: in cart
+                    boolean haveMoney = order.getTotal().compareTo(user.getBalance()) != 1;
+            %>
+
+            <tr>
+                <td>
+                    <%= order.getId() %>
+                </td>
+
+                <td>
+                    <div style='<%= haveMoney ? "color:#292b2c" : "color:#ff4500" %>'>
+                        <%= order.getTotal() %>
+                    </div>
+                </td>
+
+                <td>
+                    <%= order.getOrderStatus().getValue() %>
+                </td>
+                <td>
+                    <%
+                        if (order.getOrderStatus() == OrderStatus.PENDING_PAYMENT) {
+                            if (haveMoney) {
+                    %>
+
+                    <input type="submit" class="btn btn-outline-success btn-sm" value="Pay" name='<%= "p" + order.getId() %>'/>
+
+                    <% } else {%>
+
+                    <input type="button" class="btn btn-outline-secondary btn-sm" value="Pay" name='<%= "p" + order.getId() %>' disabled/>
+
+                    <% } %>
+
+                    <input type="submit" class="btn btn-outline-danger btn-sm" value="Cancel" name='<%= "c" + order.getId() %>'/>
+
+                    <% } else if (order.getOrderStatus() == OrderStatus.SHIPPED) { %>
+
+                    <input type="submit" class="btn btn-outline-success btn-sm" value="Delivered" name='<%= "d" + order.getId() %>'/>
+
+                    <% }} %>
+
+                </td>
+            </tr>
+        </table>
+        <form>
+    <% } %>
 
 </div>
 

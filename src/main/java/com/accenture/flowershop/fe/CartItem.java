@@ -2,21 +2,17 @@ package com.accenture.flowershop.fe;
 
 import com.accenture.flowershop.be.entity.flower.Flower;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
 public class CartItem {
     @Getter
-    @Setter
     private Flower flower;
 
     @Getter
-    @Setter
     private int amount;
 
     @Getter
-    @Setter
     private BigDecimal total;
 
     public CartItem(Flower flower, int amount) {
@@ -26,13 +22,18 @@ public class CartItem {
 //        this.total = total.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
 
-    public boolean haveAmount(int amount) {
-        return amount > 0 && (this.amount + amount) <= flower.getAmount();
+    public String getFlowerName() {
+        return flower.getName();
     }
 
+    //public boolean haveAmount(int amount) {
+    //    return amount > 0 && (amount) <= flower.getAmount();
+    //}
+
     public boolean merge(CartItem item) {
-        if (haveAmount(item.amount)) {
-            this.amount += item.amount;
+//        if (haveAmount(item.amount)) {
+        if (item.amount > 0 && item.amount <= flower.getAmount()) {
+            amount += item.amount;
             total = flower.getPrice().multiply(new BigDecimal(amount));
             return true;
         }

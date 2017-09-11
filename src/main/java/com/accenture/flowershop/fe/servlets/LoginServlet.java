@@ -36,15 +36,19 @@ public class LoginServlet extends HttpServlet {
         User user = service.login(req.getParameter("login"), req.getParameter("password"));
         boolean correctLogIn = user != null;
 
-        // correctLogin служит для одноразового оповещения о неправильном входе
-        // isLoggedIn хранится в течение всей сессии
         HttpSession session = req.getSession(false);
         session.setAttribute("correctLogIn", correctLogIn);
-        session.setAttribute("isLoggedIn", correctLogIn);
+//        session.setAttribute("isLoggedIn", correctLogIn);
+//        session.setAttribute("isAdmin", user.getIsAdmin());
 
         if (correctLogIn) {
             session.setAttribute("user", user);
-            resp.sendRedirect("/profile/info");
+            session.setAttribute("isAdmin", user.getIsAdmin());
+            if (user.getIsAdmin()) {
+                resp.sendRedirect("/admin");
+            } else {
+                resp.sendRedirect("/profile/info");
+            }
         } else {
             resp.sendRedirect("login");
         }
@@ -52,11 +56,29 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean logged = (Boolean) req.getSession(false).getAttribute("isLoggedIn");
-        if (logged == null || !logged) {
+        //Boolean logged = (Boolean) req.getSession(false).getAttribute("isLoggedIn");
+        //if (logged == null || !logged) {
+        //    req.getRequestDispatcher("login.jsp").forward(req, resp);
+        //} else {
+        //    resp.sendRedirect("profile");
+
+        try {
+            Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
+            if (isAdmin) {
+                resp.sendRedirect("admin");
+            } else {
+                resp.sendRedirect("profile");
+            }
+        } catch (NullPointerException ex) {
             req.getRequestDispatcher("login.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect("profile");
         }
+//        Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
+//        if (isAdmin == null) {
+//            req.getRequestDispatcher("login.jsp").forward(req, resp);
+//        } else if (isAdmin) {
+//            resp.sendRedirect("admin");
+//        } else {
+//            resp.sendRedirect("profile");
+//        }
     }
 }

@@ -1,6 +1,7 @@
 package com.accenture.flowershop.be.access.order;
 
 import com.accenture.flowershop.be.entity.order.Order;
+import com.accenture.flowershop.be.entity.user.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 // TODO: будет Repository, нужны ли там @Transactional - хз
 public interface OrderDAO {
     List<Order> getAll();
+
+    List<Order> getByUser(User user);
 
     Order getById(Long id);
 

@@ -34,8 +34,7 @@ public class UserDAOImpl implements UserDAO {
 
     public User update(User user) {
         try {
-            entityManager.merge(user);
-            return user;
+            return entityManager.merge(user);
         } catch (NoResultException ex) {
             return null;
         }

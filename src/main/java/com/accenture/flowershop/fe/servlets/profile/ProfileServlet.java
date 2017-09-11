@@ -23,6 +23,13 @@ public class ProfileServlet extends HttpServlet {
 //            req.getSession(false).setAttribute("isLoggedIn", false);
             req.getSession(false).invalidate();
             resp.sendRedirect("index.jsp");
+        } else {
+            resp.sendRedirect("index.jsp");
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doPost(req, resp);
     }
 }

@@ -43,8 +43,7 @@ public class FlowerDAOImpl implements FlowerDAO {
 
     public Flower update(Flower flower) {
         try {
-            entityManager.merge(flower);
-            return flower;
+            return entityManager.merge(flower);
         } catch (NoResultException ex) {
             return null;
         }

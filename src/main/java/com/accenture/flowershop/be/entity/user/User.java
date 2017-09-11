@@ -1,9 +1,7 @@
 package com.accenture.flowershop.be.entity.user;
 
-import com.sun.deploy.security.MSCryptoDSASignature;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,10 +14,13 @@ public class User {
     @Setter
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
+    //@Getter
+    //@Setter
+    //private UserType userType;
     @Getter
     @Setter
-    private UserType userType;
+    private Boolean isAdmin;
 
     @Getter
     @Setter
@@ -43,29 +44,25 @@ public class User {
 
     @Getter
     @Setter
-//    @Value("#{config['user.defaultBalance']}")
-//    @Value("${user.defaultBalance}")
     private BigDecimal balance;
 
     @Getter
     @Setter
-//    @Value("#{config['user.defaultDiscount']}")
-//    @Value("${user.defaultDiscount}")
     private Integer discount;
 
     public User() {
     }
 
-    public User(String login, String password, String firstName, String lastName, String address) {
-        userType = UserType.CUSTOMER;
+    public User(String login, String password, String firstName, String lastName, String address, BigDecimal balance, Integer discount) {
+        //userType = UserType.CUSTOMER;
+        isAdmin = false;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
         this.address = address;
-        //
-        this.balance = new BigDecimal(500);
-        this.discount = 0;
+        this.balance = balance;
+        this.discount = discount;
     }
 }
 

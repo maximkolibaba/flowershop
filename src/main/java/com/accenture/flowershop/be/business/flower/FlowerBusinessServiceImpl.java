@@ -30,6 +30,11 @@ public class FlowerBusinessServiceImpl implements FlowerBusinessService {
         return flower != null && flower.getAmount() >= amount;
     }
 
+    public Flower order(Flower flower, int amount) {
+        flower.setAmount(flower.getAmount() - amount);
+        return dao.update(flower);
+    }
+
 //    public Flower order(long id, int amount) {
 //        if ()
 //    }

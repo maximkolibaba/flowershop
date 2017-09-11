@@ -7,6 +7,7 @@ import com.accenture.flowershop.be.entity.order.OrderItem;
 import com.accenture.flowershop.fe.Cart;
 import com.accenture.flowershop.fe.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import sun.util.resources.cldr.tr.CalendarData_tr_TR;
 
@@ -40,10 +41,11 @@ public class ProfileCatalogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-        }
+        //Cart cart = (Cart) session.getAttribute("cart");
+        //if (cart == null) {
+        //    cart = new Cart();
+        //}
+        Cart cart = new Cart((Cart) session.getAttribute("cart"));
         List<Flower> flowers = service.getAllFlowers();
 
         for (Flower flower : flowers) {
@@ -51,7 +53,7 @@ public class ProfileCatalogServlet extends HttpServlet {
             String amountStr = req.getParameter(String.valueOf(id));
             Integer amount;
             if (amountStr.length() != 0 && (amount = Integer.parseInt(amountStr)) > 0) {
-                cart.addToCart(new CartItem(flower, amount));
+                cart.addToCart(new CartItem(service.order(flower, amount), amount));
             }
         }
 
