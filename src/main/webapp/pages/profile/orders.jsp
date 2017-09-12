@@ -80,7 +80,7 @@
                 </td>
 
                 <td>
-                    <div style='<%= haveMoney ? "color:#292b2c" : "color:#ff4500" %>'>
+                    <div style='<%= (!haveMoney && order.getOrderStatus() == OrderStatus.PENDING_PAYMENT) ? "color:#ff4500" : "color:#292b2c" %>'>
                         <%= order.getTotal() %>
                     </div>
                 </td>

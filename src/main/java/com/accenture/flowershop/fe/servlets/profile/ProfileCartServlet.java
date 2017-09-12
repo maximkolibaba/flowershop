@@ -1,5 +1,6 @@
 package com.accenture.flowershop.fe.servlets.profile;
 
+import com.accenture.flowershop.be.business.flower.FlowerBusinessService;
 import com.accenture.flowershop.be.business.order.OrderBusinessService;
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.user.User;
@@ -20,7 +21,10 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/profile/cart")
 public class ProfileCartServlet extends HttpServlet {
     @Autowired
-    private OrderBusinessService service;
+    private OrderBusinessService orderService;
+
+    @Autowired
+    private FlowerBusinessService flowerService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,7 +40,7 @@ public class ProfileCartServlet extends HttpServlet {
 
         if (req.getParameter("buttonOrder") != null) {
             User user = (User) session.getAttribute("user");
-            Order order = service.createOrder(cart, user);
+            Order order = orderService.createOrder(cart, user);
             if (order != null) {
                 cart.clear();
                 req.getSession(false).setAttribute("cart", cart);
@@ -45,8 +49,9 @@ public class ProfileCartServlet extends HttpServlet {
             }
         } else {
             for (CartItem item : cart) {
-                if (req.getParameter("remove" + item.getFlowerName()) != null) {
+                if (req.getParameter("remove" + item.getFlower().getName()) != null) {
                     cart.removeFromCart(item);
+                    flowerService.returnToStock(item.getFlower(), item.getAmount());
                     req.getSession(false).setAttribute("cart", cart);
                     break;
                 }

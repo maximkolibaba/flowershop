@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", user);
             session.setAttribute("isAdmin", user.getIsAdmin());
             if (user.getIsAdmin()) {
-                resp.sendRedirect("/admin");
+                resp.sendRedirect("admin");
             } else {
                 resp.sendRedirect("/profile/info");
             }

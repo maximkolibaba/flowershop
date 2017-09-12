@@ -8,4 +8,6 @@ public interface FlowerBusinessService {
     List<Flower> getAllFlowers();
 
     Flower order(Flower flower, int amount);
+
+    Flower returnToStock(Flower flower, int amount);
 }

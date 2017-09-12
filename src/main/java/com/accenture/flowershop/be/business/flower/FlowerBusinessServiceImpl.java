@@ -21,4 +21,8 @@ public class FlowerBusinessServiceImpl implements FlowerBusinessService {
         flower.setAmount(flower.getAmount() - amount);
         return dao.update(flower);
     }
+
+    public Flower returnToStock(Flower flower, int amount) {
+        return this.order(flower, -amount);
+    }
 }

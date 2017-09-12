@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.accenture.flowershop.be.entity.order.OrderStatus" %>
 <%@ page import="java.util.Collections" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
@@ -81,9 +83,10 @@
 
                 <td><%= order.getTotal() %> </td>
 
-                <td><%= order.getCreateDate() %> </td>
+                <td><%= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.getDefault()).format(order.getCreateDate()) %> </td>
 
-                <td><%= order.getCompleteDate() == null ? " " : order.getCompleteDate() %> </td>
+                <td><%= order.getCompleteDate() == null ? " " : new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss"
+                        , Locale.getDefault()).format(order.getCompleteDate()) %> </td>
 
                 <td><%= order.getOrderStatus().getValue() %></td>
 
@@ -92,6 +95,7 @@
                     <input type="submit" class="btn btn-outline-primary btn-sm" value="Ship" name='<%= "s" + order.getId() %>'/>
                     <% } else if (order.getOrderStatus() == OrderStatus.DELIVERED) { %>
                     <input type="submit" class="btn btn-outline-primary btn-sm" value="Complete" name='<%= "c" + order.getId() %>'/>
+                    <% } else {%>
                     <% } %>
                 </td>
             </tr>

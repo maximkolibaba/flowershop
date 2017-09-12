@@ -35,7 +35,7 @@ public class AdminServlet extends HttpServlet {
                 break;
             }
         }
-        resp.sendRedirect("admin");
+        resp.sendRedirect("/admin");
     }
 
     @Override

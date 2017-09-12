@@ -40,7 +40,7 @@ public class ProfileOrdersServlet extends HttpServlet {
             if (req.getParameter("p" + order.getId()) != null) {
                 // pay
                 if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
-                    user = userService.payOrder(user, order.getTotal());
+                    userService.payOrder(user, order.getTotal());
                     break;
                 }
             } else if (req.getParameter("c" + order.getId()) != null) {

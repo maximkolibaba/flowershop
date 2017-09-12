@@ -25,12 +25,12 @@ public class Order implements Comparable<Order> {
     @Setter
     private User user;
 
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Getter
     @Setter
     private Date createDate;
 
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Getter
     @Setter
     private Date completeDate;

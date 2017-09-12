@@ -68,12 +68,12 @@
             </tr>
             <% for (CartItem item : cart) { %>
                 <tr>
-                    <td><%= item.getFlowerName() %></td>
+                    <td><%= item.getFlower().getName() %></td>
                     <td><%= item.getAmount() %></td>
                     <td><%= item.getTotal() %></td>
                     <td>
                         <input type="submit" class="btn btn-outline-danger btn-sm" value="Remove"
-                               name='<%= "remove" + item.getFlowerName() %>'/>
+                               name='<%= "remove" + item.getFlower().getName() %>'/>
                     </td>
                 </tr>
             <% } %>

@@ -13,10 +13,6 @@ public class Cart implements Iterable<CartItem> {
     @Getter
     private BigDecimal total;
 
-    public Cart() {
-        this(null);
-    }
-
     public Cart(Cart cart) {
         if (cart != null) {
             this.items = cart.items;
