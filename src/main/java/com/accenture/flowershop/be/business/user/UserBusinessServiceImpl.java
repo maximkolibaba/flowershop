@@ -2,6 +2,7 @@ package com.accenture.flowershop.be.business.user;
 
 import com.accenture.flowershop.be.access.user.UserDAO;
 import com.accenture.flowershop.be.entity.user.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserBusinessServiceImpl implements UserBusinessService {
     private Properties properties;
 
     public User login(String login, String password) {
-        if (login.length() == 0 || password.length() == 0) {
+        if (login == null || login.length() == 0 || password == null || password.length() == 0) {
             return null;
         }
 
@@ -65,7 +66,7 @@ public class UserBusinessServiceImpl implements UserBusinessService {
     }
 
     public User payOrder(User user, BigDecimal price) {
-        user.setBalance(user.getBalance().subtract(price));
+        user.setBalance(user.getBalance().subtract(price)); // todo in user
         return dao.update(user);
     }
 }

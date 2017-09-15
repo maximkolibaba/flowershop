@@ -8,10 +8,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/login")
@@ -20,22 +17,29 @@ public class LoginServlet extends HttpServlet {
     private UserBusinessService service;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    public void init() throws ServletException {
+//        super.init(config);
+//        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+
         if (req.getParameter("buttonRegister") != null) {
             resp.sendRedirect("/register");
             return;
         }
 
-        User user = service.login(req.getParameter("login"), req.getParameter("password"));
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        User user = service.login(login, password);
         boolean correctLogIn = user != null;
 
         HttpSession session = req.getSession(false);
+        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn ? "true" : "false");
+        resp.addCookie(correctLoginCookie);
         session.setAttribute("correctLogIn", correctLogIn);
 
         if (correctLogIn) {

@@ -16,6 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="css/index.css"/>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/register.js"></script>
+    <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
 
@@ -55,6 +58,8 @@
                     <div style="color:orangered">This username is already in use. Please enter another username.</div>
                     <br/>
                 </c:if>
+
+                <div id="divLogin"></div>
 
                 <%-- Password --%>
 

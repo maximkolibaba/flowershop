@@ -50,7 +50,7 @@
     <br/>
 
     <%
-        List<Order> orders = (List<Order>) request.getSession(false).getAttribute("orders");
+        List<Order> orders = (List) request.getSession(false).getAttribute("orders");
         User user = (User) request.getSession(false).getAttribute("user");
         if (orders == null || orders.isEmpty()) {
     %>

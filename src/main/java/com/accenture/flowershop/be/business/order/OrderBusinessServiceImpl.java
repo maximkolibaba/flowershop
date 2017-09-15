@@ -39,7 +39,9 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         //Order order = new Order(user, cart.getTotal());
         Order order = orderDAO.create(new Order(user, cart.getTotal()));
         if (order == null) {
-            return null;
+//            return null;
+        throw new NullPointerException();
+        // todo optional<t>
         }
 
         for (CartItem cartItem : cart) {
