@@ -2,6 +2,7 @@ package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -10,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -25,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
+//        resp.setContentType("text/html");
 
         if (req.getParameter("buttonRegister") != null) {
             resp.sendRedirect("/register");
@@ -35,16 +37,21 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = service.login(login, password);
-        boolean correctLogIn = user != null;
+        Boolean correctLogIn = user != null;
 
         HttpSession session = req.getSession(false);
-        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn ? "true" : "false");
+        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn.toString());
         resp.addCookie(correctLoginCookie);
         session.setAttribute("correctLogIn", correctLogIn);
 
         if (correctLogIn) {
             session.setAttribute("user", user);
             session.setAttribute("isAdmin", user.getIsAdmin());
+            String str;
+            str = URLEncoder.encode(new Gson().toJson(user, User.class), "UTF-8");
+            resp.addCookie(new Cookie("user", str));
+            str = user.getIsAdmin().toString();
+            resp.addCookie(new Cookie("isAdmin", str));
             if (user.getIsAdmin()) {
                 resp.sendRedirect("admin");
             } else {
