@@ -1,7 +1,14 @@
 $(function () {
-    $('#inputLogin').on('keyup', function () {
-        var $divLogin = $('#divLogin');
-        var username = $('#inputLogin').val();
+    var $inputLogin = $('#inputLogin');
+    var $divLogin = $('#divLogin');
+    textAndColor($divLogin, "This field should not be empty", "color:black");
+
+    $inputLogin.bind("input", function () {
+        var username = $inputLogin.val();
+        if (username.length === 0) {
+            textAndColor($divLogin, "This field should not be empty", "color:black");
+            return;
+        }
         $.ajax({
             url: "/rest/LoginRequest/isunique",
             type: "POST",
@@ -10,13 +17,13 @@ $(function () {
             success: function (result) {
                 var txt = result === 'true' ? 'This username is free to use :)' : 'This username is already in use :(';
                 var clr = result === 'true' ? "color:darkolivegreen" : "color:orangered";
-                textandcolor($divLogin, txt, clr);
+                textAndColor($divLogin, txt, clr);
             }
         });
     });
 });
 
-function textandcolor(el, text, color) {
+function textAndColor(el, text, color) {
     el.attr("style", color);
     el.html(text + "<p/>");
 }
