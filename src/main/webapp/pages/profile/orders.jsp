@@ -2,12 +2,17 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.accenture.flowershop.be.entity.user.User" %>
 <%@ page import="com.accenture.flowershop.be.entity.order.OrderStatus" %>
+<%@ page import="com.accenture.flowershop.fe.Redirect" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", 0);
+
+    if (Redirect.fromUserPage(request, response)) {
+        return;
+    }
 %>
 
 <!DOCTYPE html>
@@ -27,17 +32,6 @@
 
     <h2>Orders</h2>
     <br/>
-
-    <%
-        Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
-        if (isAdmin == null) {
-            response.sendRedirect("../../index.jsp");
-            return;
-        } else if (isAdmin) {
-            response.sendRedirect("/admin");
-            return;
-        }
-    %>
 
     <form action="/profile" method="post">
         <input type="submit" name="buttonInfo" class="btn btn-outline-info" value="Personal Information"/>
@@ -94,19 +88,23 @@
                             if (haveMoney) {
                     %>
 
-                    <input type="submit" class="btn btn-outline-success btn-sm" value="Pay" name='<%= "p" + order.getId() %>'/>
+                    <input type="submit" class="btn btn-outline-success btn-sm"
+                           value="Pay" name='<%= "p" + order.getId() %>'/>
 
                     <% } else {%>
 
-                    <input type="button" class="btn btn-outline-secondary btn-sm" value="Pay" name='<%= "p" + order.getId() %>' disabled/>
+                    <input type="button" class="btn btn-outline-secondary btn-sm"
+                           value="Pay" name='<%= "p" + order.getId() %>' disabled/>
 
                     <% } %>
 
-                    <input type="submit" class="btn btn-outline-danger btn-sm" value="Cancel" name='<%= "c" + order.getId() %>'/>
+                    <input type="submit" class="btn btn-outline-danger btn-sm"
+                           value="Cancel" name='<%= "c" + order.getId() %>'/>
 
                     <% } else if (order.getOrderStatus() == OrderStatus.SHIPPED) { %>
 
-                    <input type="submit" class="btn btn-outline-success btn-sm" value="Delivered" name='<%= "d" + order.getId() %>'/>
+                    <input type="submit" class="btn btn-outline-success btn-sm"
+                           value="Delivered" name='<%= "d" + order.getId() %>'/>
 
                     <% }} %>
 

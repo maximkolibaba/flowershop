@@ -4,12 +4,17 @@
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="com.accenture.flowershop.fe.Redirect" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setDateHeader("Expires", 0);
+
+    if (Redirect.fromAdminPage(request, response)) {
+        return;
+    }
 %>
 
 <!DOCTYPE html>
@@ -29,19 +34,6 @@
 
     <h2>Admin page</h2>
     <br/>
-
-    <%
-        try {
-            Boolean isAdmin = (Boolean) request.getSession(false).getAttribute("isAdmin");
-            if (!isAdmin) {
-                response.sendRedirect("profile");
-                return;
-            }
-        } catch (NullPointerException ex) {
-            response.sendRedirect("../../index.jsp");
-            return;
-        }
-    %>
 
     <form action="/profile" method="post">
         <input type="button" name="buttonOrders" class="btn btn-primary" value="Orders"/>
