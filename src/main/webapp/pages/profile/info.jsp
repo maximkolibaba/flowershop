@@ -22,6 +22,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="../../css/index.css"/>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/register.js"></script>
 </head>
 <body>
 
@@ -34,15 +36,19 @@
     <h2>Welcome, <%= user.getFirstName() %>!</h2>
     <br/>
 
-    <form action="/profile" method="post">
+    <%--<form action="/profile" method="post">--%>
         <input type="button" name="buttonInfo" class="btn btn-primary" value="Personal Information"/>
-        <input type="submit" name="buttonCatalog" class="btn btn-outline-info" value="Catalog"/>
-        <input type="submit" name="buttonOrders" class="btn btn-outline-info" value="Orders"/>
-        <input type="submit" name="buttonCart" class="btn btn-outline-info" value="Cart"/>
-        <input type="submit" name="buttonLogout" class="btn btn-outline-danger" value="Logout"/>
-    </form>
+        <input type="button" name="buttonCatalog" class="btn btn-outline-info"
+               value="Catalog" onclick="window.location = '/profile/catalog'"/>
+        <input type="button" name="buttonOrders" class="btn btn-outline-info"
+               value="Orders" onclick="window.location = '/profile/orders'"/>
+        <input type="button" name="buttonCart" class="btn btn-outline-info"
+               value="Cart" onclick="window.location = '/profile/cart'"/>
+        <input type="button" name="buttonLogout" class="btn btn-outline-danger"
+               value="Logout" onclick="window.location = '/rest/acc/logout'">
+    <%--</form>--%>
 
-    <br/>
+    <br/><br/>
     Username: <%= user.getLogin() %><br/>
     Full name: <%= user.getFirstName() + " " + user.getLastName() %><br/>
     Balance: <%= user.getBalance() %> RUB<br/>

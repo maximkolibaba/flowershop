@@ -21,6 +21,13 @@ public class UserRest {
     @GET
     public void info() throws Exception {
         // working tipa
-        request.getRequestDispatcher("/pages/profile/info.jsp").forward(request,response);
+        request.getRequestDispatcher("/pages/profile/info.jsp").forward(request, response);
+    }
+
+    @GET
+    @Path("/logout")
+    public void logout() throws Exception {
+        request.getSession(false).invalidate();
+        response.sendRedirect("/index");
     }
 }
