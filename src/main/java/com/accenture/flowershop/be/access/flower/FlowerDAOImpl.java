@@ -23,7 +23,8 @@ public class FlowerDAOImpl implements FlowerDAO {
 
     public Flower getById(Long id) {
         try {
-            TypedQuery<Flower> query = entityManager.createQuery("select f from Flower f where f.id=:id", Flower.class);
+            TypedQuery<Flower> query = entityManager.createQuery(
+                    "select f from Flower f where f.id=:id", Flower.class);
             query.setParameter("id", id);
             Flower flower = query.getSingleResult();
             return flower;

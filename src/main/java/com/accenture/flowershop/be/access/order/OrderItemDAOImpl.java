@@ -27,7 +27,6 @@ public class OrderItemDAOImpl implements OrderItemDAO {
     public boolean delete(OrderItem item) {
         try {
             entityManager.remove(entityManager.find(OrderItem.class, item.getId()));
-//            entityManager.remove(item);
             return true;
         } catch (Exception ex) {
             return false;

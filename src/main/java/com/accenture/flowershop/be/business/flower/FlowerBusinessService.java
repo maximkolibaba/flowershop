@@ -5,7 +5,7 @@ import com.accenture.flowershop.be.entity.flower.Flower;
 import java.util.List;
 
 public interface FlowerBusinessService {
-    List<Flower> getAllFlowers();
+    List getAllFlowers();
 
     Flower order(Flower flower, int amount);
 

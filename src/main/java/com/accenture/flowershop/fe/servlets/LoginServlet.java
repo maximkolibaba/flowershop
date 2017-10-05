@@ -48,8 +48,15 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!Redirect.fromAdminPage(req, resp)) {
-            resp.sendRedirect("admin");
+
+//        if (!Redirect.fromAdminPage(req, resp)) {
+//            resp.sendRedirect("admin");
+//        }
+        Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
+        if (isAdmin != null) {
+            resp.sendRedirect(isAdmin ? "admin" : "profile");
+            return;
         }
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
 }

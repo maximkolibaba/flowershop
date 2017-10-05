@@ -30,7 +30,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     public List<Order> getByUser(User user) {
         try {
-            TypedQuery<Order> query = entityManager.createQuery("select o from Order o where o.user=:user", Order.class);
+            TypedQuery<Order> query = entityManager.createQuery(
+                    "select o from Order o where o.user=:user", Order.class);
             query.setParameter("user", user);
             return query.getResultList();
         } catch (NoResultException ex) {
@@ -40,7 +41,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     public Order getById(Long id) {
         try {
-            TypedQuery<Order> query = entityManager.createQuery("select o from Order o where o.id=:id", Order.class);
+            TypedQuery<Order> query = entityManager.createQuery(
+                    "select o from Order o where o.id=:id", Order.class);
             query.setParameter("id", id);
             return query.getSingleResult();
         } catch (NoResultException ex) {
@@ -70,7 +72,6 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean delete(Order order) {
         try {
             entityManager.remove(entityManager.find(Order.class, order.getId()));
-//            entityManager.remove(order);
             return true;
         } catch (Exception ex) {
             return false;

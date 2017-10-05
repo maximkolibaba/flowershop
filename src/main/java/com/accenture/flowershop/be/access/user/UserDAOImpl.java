@@ -15,7 +15,8 @@ public class UserDAOImpl implements UserDAO {
 
     public User getByLogin(String login) {
         try {
-            TypedQuery<User> query = entityManager.createQuery("select u from User u where u.login=:login", User.class);
+            TypedQuery<User> query = entityManager.createQuery(
+                    "select u from User u where u.login=:login", User.class);
             query.setParameter("login", login);
             return query.getSingleResult();
         } catch (NoResultException ex) {
