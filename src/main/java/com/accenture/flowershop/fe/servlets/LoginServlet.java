@@ -23,11 +23,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("buttonRegister") != null) {
-            resp.sendRedirect("/register");
-            return;
-        }
-
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = service.login(login, password);
@@ -38,19 +33,15 @@ public class LoginServlet extends HttpServlet {
         resp.addCookie(correctLoginCookie);
         session.setAttribute("correctLogIn", correctLogIn);
 
-        if (correctLogIn) {
-            session.setAttribute("user", user);
-            session.setAttribute("isAdmin", user.getIsAdmin());
-            resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
-            resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
-            if (user.getIsAdmin()) {
-                resp.sendRedirect("admin");
-            } else {
-                resp.sendRedirect("/profile/info");
-            }
-        } else {
+        if (!correctLogIn) {
             resp.sendRedirect("login");
+            return;
         }
+        session.setAttribute("user", user);
+        session.setAttribute("isAdmin", user.getIsAdmin());
+        resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
+        resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
+        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
     }
 
     @Override

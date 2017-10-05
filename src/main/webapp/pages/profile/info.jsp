@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="../../css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="../../css/index.css"/>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/register.js"></script>
 </head>
 <body>
 
@@ -36,7 +35,6 @@
     <h2>Welcome, <%= user.getFirstName() %>!</h2>
     <br/>
 
-    <%--<form action="/profile" method="post">--%>
         <input type="button" name="buttonInfo" class="btn btn-primary" value="Personal Information"/>
         <input type="button" name="buttonCatalog" class="btn btn-outline-info"
                value="Catalog" onclick="window.location = '/profile/catalog'"/>
@@ -45,14 +43,18 @@
         <input type="button" name="buttonCart" class="btn btn-outline-info"
                value="Cart" onclick="window.location = '/profile/cart'"/>
         <input type="button" name="buttonLogout" class="btn btn-outline-danger"
-               value="Logout" onclick="window.location = '/rest/acc/logout'">
-    <%--</form>--%>
+               value="Logout" onclick="window.location = '/rest/acc/logout'"/>
 
     <br/><br/>
     Username: <%= user.getLogin() %><br/>
     Full name: <%= user.getFirstName() + " " + user.getLastName() %><br/>
     Balance: <%= user.getBalance() %> RUB<br/>
-    Discount: <%= user.getDiscount() %>%
+    Discount: <%= user.getDiscount() %>%<br/>
+
+    <iframe src="/register" style="border:none;width: 100%;height: 100%;position: absolute;"
+            name="targetframe" allowTransparency="true" scrolling="no" frameborder="0">
+
+    </iframe>
 
 </div>
 

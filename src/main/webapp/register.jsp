@@ -99,7 +99,7 @@
                     <br/>
                 </c:if>
 
-                <input type="submit" class="btn btn-primary" value="Register">
+                <input type="submit" class="btn btn-primary" value="Register" id="buttonRegister">
 
                 <%
                     HttpSession s = request.getSession(false);

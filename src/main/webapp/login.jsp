@@ -45,7 +45,8 @@
 
         <input type="submit" class="btn btn-primary" value="Sign In">
 
-        <input type="submit" class="btn btn-secondary" value="Register" name="buttonRegister">
+        <input type="button" class="btn btn-secondary" value="Register"
+               name="buttonRegister" onclick="window.location = '/register'">
 
         <%
             request.getSession(false).removeAttribute("correctLogIn");
