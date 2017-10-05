@@ -3,12 +3,14 @@ package com.accenture.flowershop.fe.servlets;
 import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.JsonUtils;
+import com.accenture.flowershop.fe.Redirect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import javax.validation.constraints.AssertFalse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/login")
@@ -46,11 +48,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
-        if (isAdmin != null) {
-            resp.sendRedirect(isAdmin ? "admin" : "profile");
-            return;
+        if (!Redirect.fromAdminPage(req, resp)) {
+            resp.sendRedirect("admin");
         }
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
 }

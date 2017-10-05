@@ -1,7 +1,6 @@
 package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.user.UserBusinessService;
-import com.accenture.flowershop.be.business.user.UserRegisterResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
@@ -27,31 +25,14 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean b = (Boolean) req.getSession(false).getAttribute("success");
-        boolean success = b == null ? false : b;
-
-        if (success) {
-            req.getSession(false).setAttribute("success", false);
-            resp.sendRedirect("login");
-            return;
-        }
-
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String address = req.getParameter("address");
 
-        List<UserRegisterResult> results = service.register(login, password, firstName, lastName, address);
-        success = results.contains(UserRegisterResult.SUCCESS);
-        req.getSession().setAttribute("success", success);
-
-        if (!success) {
-            req.getSession().setAttribute("noLogin", results.contains(UserRegisterResult.NO_LOGIN));
-            req.getSession().setAttribute("noPassword", results.contains(UserRegisterResult.NO_PASSWORD));
-            req.getSession().setAttribute("loginIsUsed", results.contains(UserRegisterResult.LOGIN_IS_USED));
-            req.getSession().setAttribute("notFullInfo", results.contains(UserRegisterResult.INCOMPLETE_USER_INFO));
-        }
+        boolean success = service.register(login, password, firstName, lastName, address) != null;
+        req.getSession(false).setAttribute("success", success);
 
         resp.sendRedirect("register");
     }

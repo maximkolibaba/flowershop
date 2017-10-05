@@ -36,17 +36,13 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
     }
 
     public Order createOrder(Cart cart, User user) {
-        //Order order = new Order(user, cart.getTotal());
         Order order = orderDAO.create(new Order(user, cart.getTotal()));
         if (order == null) {
-//            return null;
-        throw new NullPointerException();
-        // todo optional<t>
+            throw new NullPointerException();
         }
 
         for (CartItem cartItem : cart) {
-//            Flower flower = flowerDAO.getById(cartItem.getFlower().getId());
-            OrderItem orderItem = new OrderItem(order, cartItem.getFlower(), cartItem.getAmount());
+            OrderItem orderItem = new OrderItem(order, cartItem);
             if (orderItemDAO.create(orderItem) == null) {
                 return null;
             }

@@ -1,6 +1,7 @@
 package com.accenture.flowershop.be.entity.order;
 
 import com.accenture.flowershop.be.entity.flower.Flower;
+import com.accenture.flowershop.fe.CartItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -41,10 +42,10 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Flower flower, int amount) {
+    public OrderItem(Order order, CartItem cartItem) {
         this.order = order;
-        this.flower = flower;
-        setAmount(amount);
+        this.flower = cartItem.getFlower();
+        setAmount(cartItem.getAmount());
     }
 
     public void setAmount(int amount) {

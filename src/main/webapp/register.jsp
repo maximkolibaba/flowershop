@@ -36,7 +36,10 @@
                 <div style="color:#2b542c">Registration is completed.</div>
                 <br/>
 
-                <input type="submit" class="btn btn-outline-success" value="Back to login page">
+                <input type="button" class="btn btn-outline-success"
+                       value="Back to login page" onclick="window.location = '/index'">
+
+                <% request.getSession(false).removeAttribute("success"); %>
 
             </c:when>
 
@@ -49,16 +52,6 @@
                     <input type="text" class="form-control" id="inputLogin" name="login">
                 </div>
 
-                <c:if test="${noLogin eq 'true'}">
-                    <div style="color:orangered">Username field is empty. Please enter your username.</div>
-                    <br/>
-                </c:if>
-
-                <c:if test="${loginIsUsed eq 'true'}">
-                    <div style="color:orangered">This username is already in use. Please enter another username.</div>
-                    <br/>
-                </c:if>
-
                 <div id="divLogin"></div>
 
                 <%-- Password --%>
@@ -67,11 +60,6 @@
                     <label for="inputPassword">Password</label>
                     <input type="password" class="form-control" id="inputPassword" name="password">
                 </div>
-
-                <c:if test="${noPassword eq 'true'}">
-                    <div style="color:orangered">Password field is empty. Please enter your password.</div>
-                    <br/>
-                </c:if>
 
                 <%-- First name --%>
 
@@ -94,20 +82,7 @@
                     <input type="text" class="form-control" id="inputAddress" name="address">
                 </div>
 
-                <c:if test="${notFullInfo eq 'true'}">
-                    <div style="color:orangered">Your personal information is incomplete. Please complete it.</div>
-                    <br/>
-                </c:if>
-
                 <input type="submit" class="btn btn-primary" value="Register" id="buttonRegister">
-
-                <%
-                    HttpSession s = request.getSession(false);
-                    s.removeAttribute("noLogin");
-                    s.removeAttribute("loginIsUsed");
-                    s.removeAttribute("noPassword");
-                    s.removeAttribute("notFullInfo");
-                %>
 
             </c:otherwise>
 

@@ -32,9 +32,28 @@ $(function () {
             textAndColor($divLogin, "", "");
         }
     });
+
+    function textAndColor(el, text, color) {
+        el.attr("style", color);
+        el.html(text + "<p/>");
+    }
+
+    // $('#buttonRegister').bind('click', function() {
+    //     var data = {
+    //         "login": $inputLogin.val(),
+    //         "password": $inputPassword.val(),
+    //         "firstName": $inputFirstName.val(),
+    //         "lastName": $inputLastName.val(),
+    //         "address": $inputAddress.val()
+    //     };
+    //     $.ajax({
+    //         url: "/rest/register",s
+    //         type: "POST",
+    //         data: JSON.stringify(data),
+    //         dataType: "json",
+    //         async: false
+    //     });
+    // });
 });
 
-function textAndColor(el, text, color) {
-    el.attr("style", color);
-    el.html(text + "<p/>");
-}
+
