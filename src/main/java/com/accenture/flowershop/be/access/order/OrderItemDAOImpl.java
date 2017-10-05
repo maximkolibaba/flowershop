@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@Deprecated
 @Component
 public class OrderItemDAOImpl implements OrderItemDAO {
     @PersistenceContext

@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Deprecated
 public interface FlowerDAO {
     List<Flower> getAll();
 

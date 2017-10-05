@@ -1,6 +1,6 @@
 package com.accenture.flowershop.be.business.user;
 
-import com.accenture.flowershop.be.access.user.UserDAO;
+import com.accenture.flowershop.be.access.user.UserRepository;
 import com.accenture.flowershop.be.entity.user.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Properties;
 @Service
 public class UserBusinessServiceImpl implements UserBusinessService {
     @Autowired
-    private UserDAO dao;
+    private UserRepository repository;
 
     @Autowired
     private Properties properties;
@@ -22,7 +22,9 @@ public class UserBusinessServiceImpl implements UserBusinessService {
             return null;
         }
 
-        User user = dao.getByLogin(login);
+//        User user = dao.getByLogin(login);
+        User user = repository.findByLogin(login);
+
 
         if (user != null) {
             if (user.getPassword().equals(password)) {
@@ -37,11 +39,13 @@ public class UserBusinessServiceImpl implements UserBusinessService {
         BigDecimal balance = new BigDecimal(properties.getProperty("user.defaultBalance"));
         Integer discount = Integer.parseInt(properties.getProperty("user.defaultDiscount"));
         User user = new User(login, password, firstName, lastName, address, balance, discount);
-        return dao.create(user);
+//        return dao.create(user);
+        return repository.save(user);
     }
 
     public User payOrder(User user, BigDecimal price) {
         user.subtractBalance(price);
-        return dao.update(user);
+//        return dao.update(user);
+        return repository.save(user);
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import org.slf4j.Logger;
 
+@Deprecated
 @Component
 public class OrderDAOImpl implements OrderDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderDAO.class);

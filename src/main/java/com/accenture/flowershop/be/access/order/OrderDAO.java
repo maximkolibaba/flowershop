@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Deprecated
 public interface OrderDAO {
     List<Order> getAll();
 
