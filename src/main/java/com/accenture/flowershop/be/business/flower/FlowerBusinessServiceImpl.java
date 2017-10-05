@@ -17,12 +17,12 @@ public class FlowerBusinessServiceImpl implements FlowerBusinessService {
     }
 
     public Flower order(Flower flower, int amount) {
-        flower.setAmount(flower.getAmount() - amount);
-//        return dao.update(flower);
+        flower.decreaseAmount(amount);
         return repository.save(flower);
     }
 
     public Flower returnToStock(Flower flower, int amount) {
-        return this.order(flower, -amount);
+        flower.increaseAmount(amount);
+        return repository.save(flower);
     }
 }
