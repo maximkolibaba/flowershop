@@ -2,8 +2,7 @@ package com.accenture.flowershop.be.entity.order;
 
 import com.accenture.flowershop.be.entity.flower.Flower;
 import com.accenture.flowershop.fe.CartItem;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,32 +10,23 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Data
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "orderId")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Getter
-    @Setter
     private Order order;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "flowerId")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @Getter
-    @Setter
     private Flower flower;
 
-    @Getter
     private int amount;
-
-    @Getter
-    @Setter
     private BigDecimal subTotal;
 
     public OrderItem() {
@@ -57,7 +47,7 @@ public class OrderItem {
     public boolean equals(Object o) {
         boolean flag = false;
         if (o != null && o instanceof OrderItem) {
-            flag = this.id == ((OrderItem) o).id;
+            flag = this.id.equals(((OrderItem) o).id);
         }
         return flag;
     }

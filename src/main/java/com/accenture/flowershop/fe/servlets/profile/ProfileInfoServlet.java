@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/profile/info")
 public class ProfileInfoServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("../pages/profile/info.jsp").forward(req, resp);
     }
 }

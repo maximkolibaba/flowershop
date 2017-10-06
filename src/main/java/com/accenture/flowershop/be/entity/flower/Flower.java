@@ -1,8 +1,6 @@
 package com.accenture.flowershop.be.entity.flower;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -32,7 +30,7 @@ public class Flower {
     public boolean equals(Object o) {
         boolean flag = false;
         if (o != null && o instanceof Flower) {
-            flag = this.id == ((Flower) o).getId();
+            flag = this.id.equals(((Flower) o).getId());
         }
         return flag;
     }

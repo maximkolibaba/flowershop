@@ -14,14 +14,8 @@ public class Cart implements Iterable<CartItem> {
     private BigDecimal total;
 
     public Cart(Cart cart) {
-        if (cart != null) {
-            this.items = cart.items;
-            this.total = cart.total;
-        } else {
-            this.items = new ArrayList<CartItem>();
-            this.total = BigDecimal.ZERO;
-            this.total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
-        }
+        this.items = cart != null ? cart.items : new ArrayList<CartItem>();
+        this.total = cart != null ? cart.total : BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public boolean addToCart(CartItem item) {

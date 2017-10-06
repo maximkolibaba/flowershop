@@ -33,15 +33,18 @@
     <h2>Cart</h2>
     <br/>
 
-    <form action="/profile" method="post">
-        <input type="submit" name="buttonInfo" class="btn btn-outline-info" value="Personal Information"/>
-        <input type="submit" name="buttonCatalog" class="btn btn-outline-info" value="Catalog"/>
-        <input type="submit" name="buttonOrders" class="btn btn-outline-info" value="Orders"/>
-        <input type="button" name="buttonCart" class="btn btn-primary" value="Cart"/>
-        <input type="submit" name="buttonLogout" class="btn btn-outline-danger" value="Logout"/>
-    </form>
+    <input type="button" name="buttonInfo" class="btn btn-outline-info"
+           value="Personal Information" onclick="window.location = '/profile/info'"/>
+    <input type="button" name="buttonCatalog" class="btn btn-outline-info"
+           value="Catalog" onclick="window.location = '/profile/catalog'"/>
+    <input type="button" name="buttonOrders" class="btn btn-outline-info"
+           value="Orders" onclick="window.location = '/profile/orders'"/>
+    <input type="button" name="buttonCart" class="btn btn-primary"
+           value="Cart"/>
+    <input type="button" name="buttonLogout" class="btn btn-outline-danger"
+           value="Logout" onclick="window.location = '/rest/acc/logout'"/>
 
-    <br/>
+    <br/><br/>
 
     <%
         Cart cart = ((Cart) request.getSession(false).getAttribute("cart"));

@@ -33,15 +33,18 @@
     <h2>Orders</h2>
     <br/>
 
-    <form action="/profile" method="post">
-        <input type="submit" name="buttonInfo" class="btn btn-outline-info" value="Personal Information"/>
-        <input type="submit" name="buttonCatalog" class="btn btn-outline-info" value="Catalog"/>
-        <input type="button" name="buttonOrders" class="btn btn-primary" value="Orders"/>
-        <input type="submit" name="buttonCart" class="btn btn-outline-info" value="Cart"/>
-        <input type="submit" name="buttonLogout" class="btn btn-outline-danger" value="Logout"/>
-    </form>
+    <input type="button" name="buttonInfo" class="btn btn-outline-info"
+           value="Personal Information" onclick="window.location = '/profile/info'"/>
+    <input type="button" name="buttonCatalog" class="btn btn-outline-info"
+           value="Catalog" onclick="window.location = '/profile/catalog'"/>
+    <input type="button" name="buttonOrders" class="btn btn-primary"
+           value="Orders"/>
+    <input type="button" name="buttonCart" class="btn btn-outline-info"
+           value="Cart" onclick="window.location = '/profile/cart'"/>
+    <input type="button" name="buttonLogout" class="btn btn-outline-danger"
+           value="Logout" onclick="window.location = '/rest/acc/logout'"/>
 
-    <br/>
+    <br/><br/>
 
     <%
         List<Order> orders = (List) request.getSession(false).getAttribute("orders");
@@ -51,7 +54,7 @@
 
     You have no orders :(
 
-    <% } else { %>
+        <% } else { %>
 
     <form action="/profile/orders" method="post">
         <table class="table">
@@ -91,22 +94,22 @@
                     <input type="submit" class="btn btn-outline-success btn-sm"
                            value="Pay" name='<%= "p" + order.getId() %>'/>
 
-                    <% } else {%>
+                            <% } else {%>
 
                     <input type="button" class="btn btn-outline-secondary btn-sm"
                            value="Pay" name='<%= "p" + order.getId() %>' disabled/>
 
-                    <% } %>
+                            <% } %>
 
                     <input type="submit" class="btn btn-outline-danger btn-sm"
                            value="Cancel" name='<%= "c" + order.getId() %>'/>
 
-                    <% } else if (order.getOrderStatus() == OrderStatus.SHIPPED) { %>
+                        <% } else if (order.getOrderStatus() == OrderStatus.SHIPPED) { %>
 
                     <input type="submit" class="btn btn-outline-success btn-sm"
                            value="Delivered" name='<%= "d" + order.getId() %>'/>
 
-                    <% }} %>
+                        <% }} %>
 
                 </td>
             </tr>

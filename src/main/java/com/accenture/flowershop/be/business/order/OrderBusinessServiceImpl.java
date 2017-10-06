@@ -31,7 +31,6 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
     }
 
     public Order createOrder(Cart cart, User user) {
-//        Order order = orderDAO.create(new Order(user, cart.getTotal()));
         Order order = orderRepository.save(new Order(user, cart.getTotal()));
         if (order == null) {
             throw new NullPointerException();
@@ -39,7 +38,6 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
 
         for (CartItem cartItem : cart) {
             OrderItem orderItem = new OrderItem(order, cartItem);
-//            if (orderItemDAO.create(orderItem) == null) {
             if (orderItemRepository.save(orderItem) == null) {
                 return null;
             }
@@ -49,21 +47,17 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
     }
 
     public boolean cancelOrder(Order order) {
-//        List<OrderItem> items = orderItemDAO.getByOrder(order);
         List<OrderItem> items = (List) orderItemRepository.findByOrder(order);
         for (OrderItem item : items) {
             try {
                 item.getFlower().setAmount(item.getFlower().getAmount() + item.getAmount());
-//                flowerDAO.update(item.getFlower());
                 flowerRepository.save(item.getFlower());
-//                orderItemDAO.delete(item);
                 orderItemRepository.delete(item);
             } catch (Exception e) {
                 return false;
             }
         }
 
-//        return orderDAO.delete(order);
         orderRepository.delete(order);
         return true;
     }
@@ -73,12 +67,10 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         if (status == OrderStatus.COMPLETED) {
             order.setCompleteDate(new Date());
         }
-//        return orderDAO.update(order);
         return orderRepository.save(order);
     }
 
     public List<Order> getUserOrders(User user) {
-//        return orderDAO.getByUser(user);
         return (List) orderRepository.findByUser(user);
     }
 }

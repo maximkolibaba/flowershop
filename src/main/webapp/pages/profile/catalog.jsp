@@ -29,15 +29,18 @@
     <h2>Catalog</h2>
     <br/>
 
-    <form action="/profile" method="post">
-        <input type="submit" name="buttonInfo" class="btn btn-outline-info" value="Personal Information"/>
-        <input type="button" name="buttonCatalog" class="btn btn-primary" value="Catalog"/>
-        <input type="submit" name="buttonOrders" class="btn btn-outline-info" value="Orders"/>
-        <input type="submit" name="buttonCart" class="btn btn-outline-info" value="Cart"/>
-        <input type="submit" name="buttonLogout" class="btn btn-outline-danger" value="Logout"/>
-    </form>
+    <input type="button" name="buttonInfo" class="btn btn-outline-info"
+           value="Personal Information" onclick="window.location = '/profile/info'"/>
+    <input type="button" name="buttonCatalog" class="btn btn-primary"
+           value="Catalog"/>
+    <input type="button" name="buttonOrders" class="btn btn-outline-info"
+           value="Orders" onclick="window.location = '/profile/orders'"/>
+    <input type="button" name="buttonCart" class="btn btn-outline-info"
+           value="Cart" onclick="window.location = '/profile/cart'"/>
+    <input type="button" name="buttonLogout" class="btn btn-outline-danger"
+           value="Logout" onclick="window.location = '/rest/acc/logout'"/>
 
-    <br/>
+    <br/><br/>
 
     <form action="/profile/catalog" method="post">
         <table class="table">

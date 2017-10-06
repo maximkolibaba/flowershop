@@ -1,46 +1,27 @@
 package com.accenture.flowershop.be.entity.order;
 
 import com.accenture.flowershop.be.entity.user.User;
-import lombok.Getter;
-import lombok.Setter;
-import sun.management.ThreadInfoCompositeData;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
+@Data
 @Table(name = "\"ORDER\"")
 public class Order implements Comparable<Order> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @Getter
-    @Setter
     private User user;
 
-//    @Temporal(TemporalType.DATE)
-    @Getter
-    @Setter
     private Date createDate;
-
-//    @Temporal(TemporalType.DATE)
-    @Getter
-    @Setter
     private Date completeDate;
-
-    @Getter
-    @Setter
     private BigDecimal total;
-
-    @Getter
-    @Setter
     private OrderStatus orderStatus;
 
     public Order() {
@@ -59,7 +40,7 @@ public class Order implements Comparable<Order> {
     public boolean equals(Object o) {
         boolean flag = false;
         if (o != null && o instanceof Order) {
-            flag = this.id == ((Order) o).getId();
+            flag = this.id.equals(((Order) o).getId());
         }
         return flag;
     }

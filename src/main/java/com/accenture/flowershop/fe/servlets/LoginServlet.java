@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("isAdmin", user.getIsAdmin());
         resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
         resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
-        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
+//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
+        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + login + "/info");
     }
 
     @Override

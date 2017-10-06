@@ -35,15 +35,15 @@
     <h2>Welcome, <%= user.getFirstName() %>!</h2>
     <br/>
 
-        <input type="button" name="buttonInfo" class="btn btn-primary" value="Personal Information"/>
-        <input type="button" name="buttonCatalog" class="btn btn-outline-info"
-               value="Catalog" onclick="window.location = '/profile/catalog'"/>
-        <input type="button" name="buttonOrders" class="btn btn-outline-info"
-               value="Orders" onclick="window.location = '/profile/orders'"/>
-        <input type="button" name="buttonCart" class="btn btn-outline-info"
-               value="Cart" onclick="window.location = '/profile/cart'"/>
-        <input type="button" name="buttonLogout" class="btn btn-outline-danger"
-               value="Logout" onclick="window.location = '/rest/acc/logout'"/>
+    <input type="button" name="buttonInfo" class="btn btn-primary" value="Personal Information"/>
+    <input type="button" name="buttonCatalog" class="btn btn-outline-info"
+           value="Catalog" onclick="window.location = 'catalog'"/>
+    <input type="button" name="buttonOrders" class="btn btn-outline-info"
+           value="Orders" onclick="window.location = '/profile/orders'"/>
+    <input type="button" name="buttonCart" class="btn btn-outline-info"
+           value="Cart" onclick="window.location = '/profile/cart'"/>
+    <input type="button" name="buttonLogout" class="btn btn-outline-danger"
+           value="Logout" onclick="window.location = '/rest/acc/logout'"/>
 
     <br/><br/>
     Username: <%= user.getLogin() %><br/>

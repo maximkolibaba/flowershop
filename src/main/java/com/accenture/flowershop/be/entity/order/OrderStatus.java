@@ -17,6 +17,22 @@ public enum OrderStatus {
         return value;
     }
 
+    public OrderStatus next() {
+        switch (this) {
+            case PENDING_PAYMENT:
+                return PROCESSING;
+            case PROCESSING:
+                return SHIPPED;
+            case SHIPPED:
+                return DELIVERED;
+            case DELIVERED:
+                return COMPLETED;
+            case COMPLETED:
+                return COMPLETED;
+        }
+        return this;
+    }
+
     @Override
     public String toString() {
         return value;
