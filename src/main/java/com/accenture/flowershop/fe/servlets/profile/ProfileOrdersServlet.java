@@ -6,6 +6,7 @@ import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.order.OrderStatus;
 import com.accenture.flowershop.be.entity.user.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -37,26 +38,40 @@ public class ProfileOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession(false).getAttribute("user");
-        List<Order> orders = orderService.getUserOrders(user);
+//        User user = (User) req.getSession(false).getAttribute("user");
+//        List<Order> orders = orderService.getUserOrders(user);
 
-        for (Order order : orders) {
-            if (req.getParameter("p" + order.getId()) != null
-                    || req.getParameter("d" + order.getId()) != null) {
-                service.updateOrderStatus(order);
-                break;
-//                // pay
-//                if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
-//                    userService.payOrder(user, order.getTotal());
-//                    break;
-//                }
-
-            } else if (req.getParameter("c" + order.getId()) != null) {
-                // cancel
-                orderService.cancelOrder(order);
-                break;
+        String orderString = req.getParameterNames().nextElement();
+        if (!StringUtils.isEmpty(orderString)) {
+            long orderId = Long.parseLong(orderString.substring(1));
+            switch (orderString.charAt(0)) {
+                case 'p':
+                case 'd':
+                    service.updateOrderStatus(orderId);
+                    break;
+                case 'c':
+                    // TODO: cancel order by order id
             }
         }
+
+
+//        for (Order order : orders) {
+//            if (req.getParameter("p" + order.getId()) != null
+//                    || req.getParameter("d" + order.getId()) != null) {
+//                service.updateOrderStatus(order);
+//                break;
+////                // pay
+////                if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
+////                    userService.payOrder(user, order.getTotal());
+////                    break;
+////                }
+//
+//            } else if (req.getParameter("c" + order.getId()) != null) {
+//                // cancel
+//                orderService.cancelOrder(order);
+//                break;
+//            }
+//        }
 
         resp.sendRedirect("/profile/orders");
     }

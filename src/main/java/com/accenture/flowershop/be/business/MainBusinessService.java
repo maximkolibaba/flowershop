@@ -10,5 +10,7 @@ public interface MainBusinessService {
 
     Order updateOrderStatus(Order order);
 
+    Order updateOrderStatus(Long orderId);
+
     Collection<Flower> getFlowers(Collection<Long> flowersIds);
 }

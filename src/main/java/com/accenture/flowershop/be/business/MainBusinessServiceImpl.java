@@ -35,6 +35,14 @@ public class MainBusinessServiceImpl implements MainBusinessService {
         return order;
     }
 
+    public Order updateOrderStatus(Long orderId) {
+        Order order = orderBusinessService.findById(orderId);
+        if (order != null) {
+            order = updateOrderStatus(order);
+        }
+        return order;
+    }
+
     public Collection<Flower> getFlowers(Collection<Long> flowersIds) {
         return flowerBusinessService.getFlowers(flowersIds);
     }

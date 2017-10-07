@@ -5,14 +5,12 @@ import com.accenture.flowershop.be.access.order.OrderItemRepository;
 import com.accenture.flowershop.be.access.order.OrderRepository;
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.order.OrderItem;
-import com.accenture.flowershop.be.entity.order.OrderStatus;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.Cart;
 import com.accenture.flowershop.fe.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -67,15 +65,12 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         return orderRepository.save(order);
     }
 
-//    public Order setStatus(Order order, OrderStatus status) {
-//        order.setOrderStatus(status);
-//        if (status == OrderStatus.COMPLETED) {
-//            order.setCompleteDate(new Date());
-//        }
-//        return orderRepository.save(order);
-//    }
-
     public List<Order> getUserOrders(User user) {
         return (List) orderRepository.findByUser(user);
+    }
+
+    @Override
+    public Order findById(Long id) {
+        return orderRepository.findOne(id);
     }
 }
