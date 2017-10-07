@@ -1,5 +1,6 @@
 package com.accenture.flowershop.fe;
 
+import com.accenture.flowershop.be.entity.flower.Flower;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -43,6 +44,15 @@ public class Cart implements Iterable<CartItem> {
             return true;
         }
         return false;
+    }
+
+    public CartItem discardItem(String flowerName) {
+        CartItem item = items.stream().filter(it -> it.getFlower().getName().equals(flowerName)).findFirst().get();
+        removeFromCart(item);
+        return item;
+        // TODO: refactor
+        // flowerService.returnToStock(item.getFlower(), item.getAmount());
+        // req.getSession(false).setAttribute("cart", cart);
     }
 
     private void setTotal() {

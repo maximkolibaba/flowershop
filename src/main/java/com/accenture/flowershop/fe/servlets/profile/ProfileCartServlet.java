@@ -2,10 +2,12 @@ package com.accenture.flowershop.fe.servlets.profile;
 
 import com.accenture.flowershop.be.business.flower.FlowerBusinessService;
 import com.accenture.flowershop.be.business.order.OrderBusinessService;
+import com.accenture.flowershop.be.entity.flower.Flower;
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.Cart;
 import com.accenture.flowershop.fe.CartItem;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -49,17 +51,12 @@ public class ProfileCartServlet extends HttpServlet {
             }
         } else {
             String flowerName = req.getParameterNames().nextElement();
-            if (flowerName != null) {
-                flowerName = flowerName.substring(6); // TODO
-            }
-            for (CartItem item : cart) {
-                if (req.getParameter("remove" + item.getFlower().getName()) != null) {
-                    cart.removeFromCart(item);
-                    flowerService.returnToStock(item.getFlower(), item.getAmount());
-                    req.getSession(false).setAttribute("cart", cart);
-                    break;
-                }
-
+            if (!StringUtils.isEmpty(flowerName)) {
+                // TODO: refactor
+                flowerName = flowerName.substring(6);
+                CartItem item = cart.discardItem(flowerName);
+                flowerService.returnToStock(item.getFlower(), item.getAmount());
+                req.getSession(false).setAttribute("cart", cart);
             }
         }
         resp.sendRedirect("/profile/cart");

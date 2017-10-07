@@ -46,7 +46,7 @@ public class ProfileCatalogServlet extends HttpServlet {
         // TODO: better to make function which will take ids of flowers and fill the cart in
         List<Flower> flowers = (List<Flower>) service.getFlowers(orderedFlowers.keySet());
 
-
+        // TODO
 //        List<Flower> flowers = flowerBusinessService.getAllFlowers();
 //        for (Flower flower : flowers) {
 //            long id = flower.getId();
