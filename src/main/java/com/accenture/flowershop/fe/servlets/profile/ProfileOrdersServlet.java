@@ -1,5 +1,6 @@
 package com.accenture.flowershop.fe.servlets.profile;
 
+import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.business.order.OrderBusinessService;
 import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.order.Order;
@@ -22,8 +23,11 @@ public class ProfileOrdersServlet extends HttpServlet {
     @Autowired
     private OrderBusinessService orderService;
 
+//    @Autowired
+//    private UserBusinessService userService;
+
     @Autowired
-    private UserBusinessService userService;
+    private MainBusinessService service;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -37,19 +41,19 @@ public class ProfileOrdersServlet extends HttpServlet {
         List<Order> orders = orderService.getUserOrders(user);
 
         for (Order order : orders) {
-            if (req.getParameter("p" + order.getId()) != null) {
-                // pay
-                if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
-                    userService.payOrder(user, order.getTotal());
-                    break;
-                }
+            if (req.getParameter("p" + order.getId()) != null
+                    || req.getParameter("d" + order.getId()) != null) {
+                service.updateOrderStatus(order);
+                break;
+//                // pay
+//                if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
+//                    userService.payOrder(user, order.getTotal());
+//                    break;
+//                }
+
             } else if (req.getParameter("c" + order.getId()) != null) {
                 // cancel
                 orderService.cancelOrder(order);
-                break;
-            } else if (req.getParameter("d" + order.getId()) != null) {
-                // delivered
-                orderService.setStatus(order, OrderStatus.DELIVERED);
                 break;
             }
         }

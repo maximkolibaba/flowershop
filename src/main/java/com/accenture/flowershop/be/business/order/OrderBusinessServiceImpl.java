@@ -62,13 +62,18 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         return true;
     }
 
-    public Order setStatus(Order order, OrderStatus status) {
-        order.setOrderStatus(status);
-        if (status == OrderStatus.COMPLETED) {
-            order.setCompleteDate(new Date());
-        }
+    public Order updateStatus(Order order) {
+        order.nextStatus();
         return orderRepository.save(order);
     }
+
+//    public Order setStatus(Order order, OrderStatus status) {
+//        order.setOrderStatus(status);
+//        if (status == OrderStatus.COMPLETED) {
+//            order.setCompleteDate(new Date());
+//        }
+//        return orderRepository.save(order);
+//    }
 
     public List<Order> getUserOrders(User user) {
         return (List) orderRepository.findByUser(user);

@@ -14,7 +14,8 @@ public interface OrderBusinessService {
 
     boolean cancelOrder(Order order);
 
-    Order setStatus(Order order, OrderStatus status);
+//    Order setStatus(Order order, OrderStatus status);
+    Order updateStatus(Order order);
 
     List<Order> getUserOrders(User user);
 }

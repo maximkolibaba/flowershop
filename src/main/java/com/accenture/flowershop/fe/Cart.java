@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Cart implements Iterable<CartItem> {
     private List<CartItem> items;
@@ -29,6 +30,11 @@ public class Cart implements Iterable<CartItem> {
             setTotal();
         }
         return false;
+    }
+
+    // TODO: maybe make boolean
+    public void addToCart(Map<Long, Integer> flowers) {
+
     }
 
     public boolean removeFromCart(CartItem item) {

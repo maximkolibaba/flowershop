@@ -5,6 +5,7 @@ import com.accenture.flowershop.be.entity.flower.Flower;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -24,5 +25,9 @@ public class FlowerBusinessServiceImpl implements FlowerBusinessService {
     public Flower returnToStock(Flower flower, int amount) {
         flower.increaseAmount(amount);
         return repository.save(flower);
+    }
+
+    public Collection<Flower> getFlowers(Collection<Long> flowerIds) {
+        return repository.findFlowersByIdIn(flowerIds);
     }
 }

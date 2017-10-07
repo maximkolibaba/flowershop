@@ -48,6 +48,10 @@ public class ProfileCartServlet extends HttpServlet {
                 return;
             }
         } else {
+            String flowerName = req.getParameterNames().nextElement();
+            if (flowerName != null) {
+                flowerName = flowerName.substring(6); // TODO
+            }
             for (CartItem item : cart) {
                 if (req.getParameter("remove" + item.getFlower().getName()) != null) {
                     cart.removeFromCart(item);

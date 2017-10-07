@@ -52,4 +52,11 @@ public class Order implements Comparable<Order> {
         }
         return flag;
     }
+
+    public void nextStatus() {
+        orderStatus = orderStatus.next();
+        if (orderStatus == OrderStatus.COMPLETED) {
+            completeDate = new Date();
+        }
+    }
 }

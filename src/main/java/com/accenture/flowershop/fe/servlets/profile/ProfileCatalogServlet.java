@@ -1,9 +1,9 @@
 package com.accenture.flowershop.fe.servlets.profile;
 
+import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.business.flower.FlowerBusinessService;
 import com.accenture.flowershop.be.entity.flower.Flower;
 import com.accenture.flowershop.fe.Cart;
-import com.accenture.flowershop.fe.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -16,11 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/profile/catalog")
 public class ProfileCatalogServlet extends HttpServlet {
     @Autowired
-    private FlowerBusinessService service;
+    private FlowerBusinessService flowerBusinessService;
+
+    @Autowired
+    private MainBusinessService service;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -33,16 +38,24 @@ public class ProfileCatalogServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         Cart cart = new Cart((Cart) session.getAttribute("cart"));
-        List<Flower> flowers = service.getAllFlowers();
+        Map<Long, Integer> orderedFlowers = req.getParameterMap().entrySet().stream()
+                .filter(map -> !map.getValue()[0].equals("0"))
+                .collect(Collectors.toMap(p -> Long.parseLong(p.getKey()), p -> Integer.parseInt(p.getValue()[0])));
 
-        for (Flower flower : flowers) {
-            long id = flower.getId();
-            String amountStr = req.getParameter(String.valueOf(id));
-            Integer amount;
-            if (amountStr.length() != 0 && (amount = Integer.parseInt(amountStr)) > 0) {
-                cart.addToCart(new CartItem(service.order(flower, amount), amount));
-            }
-        }
+
+        // TODO: better to make function which will take ids of flowers and fill the cart in
+        List<Flower> flowers = (List<Flower>) service.getFlowers(orderedFlowers.keySet());
+
+
+//        List<Flower> flowers = flowerBusinessService.getAllFlowers();
+//        for (Flower flower : flowers) {
+//            long id = flower.getId();
+//            String amountStr = req.getParameter(String.valueOf(id));
+//            Integer amount;
+//            if (amountStr.length() != 0 && (amount = Integer.parseInt(amountStr)) > 0) {
+//                cart.addToCart(new CartItem(flowerBusinessService.order(flower, amount), amount));
+//            }
+//        }
 
         session.setAttribute("cart", cart);
         resp.sendRedirect("/profile/cart");
@@ -50,7 +63,7 @@ public class ProfileCatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("flowers", service.getAllFlowers());
+        req.setAttribute("flowers", flowerBusinessService.getAllFlowers());
         req.getRequestDispatcher("../pages/profile/catalog.jsp").forward(req, resp);
     }
 }
