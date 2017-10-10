@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MainBusinessServiceImpl implements MainBusinessService {
@@ -56,5 +57,23 @@ public class MainBusinessServiceImpl implements MainBusinessService {
 
     public List<Order> getUserOrders(User user) {
         return orderBusinessService.getUserOrders(user);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderBusinessService.getAllOrders();
+    }
+
+    public User registerUser(String login, String password, String firstName, String lastName, String address) {
+        return userBusinessService.register(login, password, firstName, lastName, address);
+    }
+
+    public User registerUser(Map<String, String[]> parameters) {
+        return this.registerUser(
+                parameters.get("login")[0],
+                parameters.get("password")[0],
+                parameters.get("firstName")[0],
+                parameters.get("lastName")[0],
+                parameters.get("address")[0]
+        );
     }
 }

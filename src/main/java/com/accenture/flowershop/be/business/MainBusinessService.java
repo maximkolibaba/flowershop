@@ -6,6 +6,7 @@ import com.accenture.flowershop.be.entity.user.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface MainBusinessService {
     Flower orderFlower(Flower flower, int amount);
@@ -21,4 +22,10 @@ public interface MainBusinessService {
     Collection<Flower> getFlowers(Collection<Long> flowersIds);
 
     List<Order> getUserOrders(User user);
+
+    List<Order> getAllOrders();
+
+    User registerUser(String login, String password, String firstName, String lastName, String address);
+
+    User registerUser(Map<String, String[]> parameters);
 }

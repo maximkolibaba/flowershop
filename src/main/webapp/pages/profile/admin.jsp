@@ -27,6 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="../../css/index.css"/>
+    <script src="../../js/admin.js"></script>
 </head>
 <body>
 
@@ -84,9 +85,9 @@
 
                 <td>
                     <% if (order.getOrderStatus() == OrderStatus.PROCESSING) { %>
-                    <input type="submit" class="btn btn-outline-primary btn-sm" value="Ship" name='<%= "s" + order.getId() %>'/>
+                    <input type="button" class="btn btn-outline-primary btn-sm .admin-btn" value="Ship" name='<%= "s" + order.getId() %>'/>
                     <% } else if (order.getOrderStatus() == OrderStatus.DELIVERED) { %>
-                    <input type="submit" class="btn btn-outline-primary btn-sm" value="Complete" name='<%= "c" + order.getId() %>'/>
+                    <input type="button" class="btn btn-outline-primary btn-sm .admin-btn" value="Complete" name='<%= "c" + order.getId() %>'/>
                     <% } else {%>
                     <% } %>
                 </td>

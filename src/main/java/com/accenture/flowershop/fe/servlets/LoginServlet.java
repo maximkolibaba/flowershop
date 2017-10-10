@@ -25,13 +25,12 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        User user = service.login(login, password);
+        User user = service.login(req.getParameter("login"), req.getParameter("password"));
         Boolean correctLogIn = user != null;
 
         HttpSession session = req.getSession(false);
         Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn.toString());
+
         resp.addCookie(correctLoginCookie);
         session.setAttribute("correctLogIn", correctLogIn);
 
@@ -39,20 +38,18 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("login");
             return;
         }
+
         session.setAttribute("user", user);
         session.setAttribute("isAdmin", user.getIsAdmin());
+
         resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
         resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
 //        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
-        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + login + "/info");
+        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + user.getLogin() + "/info");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        if (!Redirect.fromAdminPage(req, resp)) {
-//            resp.sendRedirect("admin");
-//        }
         Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
         if (isAdmin != null) {
             resp.sendRedirect(isAdmin ? "admin" : "profile");

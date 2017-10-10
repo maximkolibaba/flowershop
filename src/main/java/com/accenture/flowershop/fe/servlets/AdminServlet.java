@@ -1,7 +1,6 @@
 package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.MainBusinessService;
-import com.accenture.flowershop.be.business.order.OrderBusinessService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -16,9 +15,6 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/admin")
 public class AdminServlet extends HttpServlet {
-    @Autowired
-    private OrderBusinessService orderBusinessService;
-
     @Autowired
     private MainBusinessService service;
 
@@ -35,7 +31,7 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("allOrders", orderBusinessService.getAllOrders());
+        req.setAttribute("allOrders", service.getAllOrders());
         req.getRequestDispatcher("pages/profile/admin.jsp").forward(req, resp);
     }
 
