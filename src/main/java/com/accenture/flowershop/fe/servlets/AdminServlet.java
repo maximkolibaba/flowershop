@@ -2,7 +2,7 @@ package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.business.order.OrderBusinessService;
-import com.accenture.flowershop.be.entity.order.Order;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/admin")
 public class AdminServlet extends HttpServlet {
@@ -25,24 +24,12 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Order> orders = orderBusinessService.getAllOrders();
+        String orderId = req.getParameterNames().nextElement();
 
-        for (Order order : orders) {
-            if (req.getParameter("s" + order.getId()) != null
-                    || req.getParameter("c" + order.getId()) != null) {
-                service.updateOrderStatus(order);
-                break;
-            }
-//            if (req.getParameter("s" + order.getId()) != null) {
-//                // ship
-//                orderBusinessService.setStatus(order, OrderStatus.SHIPPED);
-//                break;
-//            } else if (req.getParameter("c" + order.getId()) != null) {
-//                // complete
-//                orderBusinessService.setStatus(order, OrderStatus.COMPLETED);
-//                break;
-//            }
+        if (!StringUtils.isEmpty(orderId)) {
+            service.updateOrderStatus(Long.parseLong(orderId));
         }
+
         resp.sendRedirect("/admin");
     }
 

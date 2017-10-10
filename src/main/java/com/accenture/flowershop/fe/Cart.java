@@ -1,6 +1,5 @@
 package com.accenture.flowershop.fe;
 
-import com.accenture.flowershop.be.entity.flower.Flower;
 import lombok.Getter;
 
 import java.math.BigDecimal;

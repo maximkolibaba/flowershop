@@ -4,6 +4,7 @@ import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.business.flower.FlowerBusinessService;
 import com.accenture.flowershop.be.entity.flower.Flower;
 import com.accenture.flowershop.fe.Cart;
+import com.accenture.flowershop.fe.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -42,20 +43,12 @@ public class ProfileCatalogServlet extends HttpServlet {
                 .filter(map -> !map.getValue()[0].equals("0"))
                 .collect(Collectors.toMap(p -> Long.parseLong(p.getKey()), p -> Integer.parseInt(p.getValue()[0])));
 
-
-        // TODO: better to make function which will take ids of flowers and fill the cart in
+        // TODO: [REFACTOR] better to make function which will take ids of flowers and fill the cart in
         List<Flower> flowers = (List<Flower>) service.getFlowers(orderedFlowers.keySet());
-
-        // TODO
-//        List<Flower> flowers = flowerBusinessService.getAllFlowers();
-//        for (Flower flower : flowers) {
-//            long id = flower.getId();
-//            String amountStr = req.getParameter(String.valueOf(id));
-//            Integer amount;
-//            if (amountStr.length() != 0 && (amount = Integer.parseInt(amountStr)) > 0) {
-//                cart.addToCart(new CartItem(flowerBusinessService.order(flower, amount), amount));
-//            }
-//        }
+        for (Flower flower : flowers) {
+            int amount = orderedFlowers.get(flower.getId());
+            cart.addToCart(new CartItem(service.orderFlower(flower, amount), amount));
+        }
 
         session.setAttribute("cart", cart);
         resp.sendRedirect("/profile/cart");

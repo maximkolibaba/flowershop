@@ -1,10 +1,7 @@
 package com.accenture.flowershop.fe.servlets.profile;
 
 import com.accenture.flowershop.be.business.MainBusinessService;
-import com.accenture.flowershop.be.business.order.OrderBusinessService;
-import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.order.Order;
-import com.accenture.flowershop.be.entity.order.OrderStatus;
 import com.accenture.flowershop.be.entity.user.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +19,6 @@ import java.util.List;
 @WebServlet(urlPatterns = "/profile/orders")
 public class ProfileOrdersServlet extends HttpServlet {
     @Autowired
-    private OrderBusinessService orderService;
-
-//    @Autowired
-//    private UserBusinessService userService;
-
-    @Autowired
     private MainBusinessService service;
 
     @Override
@@ -38,9 +29,6 @@ public class ProfileOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        User user = (User) req.getSession(false).getAttribute("user");
-//        List<Order> orders = orderService.getUserOrders(user);
-
         String orderString = req.getParameterNames().nextElement();
         if (!StringUtils.isEmpty(orderString)) {
             long orderId = Long.parseLong(orderString.substring(1));
@@ -50,35 +38,17 @@ public class ProfileOrdersServlet extends HttpServlet {
                     service.updateOrderStatus(orderId);
                     break;
                 case 'c':
-                    // TODO: cancel order by order id
+                    service.cancelOrder(orderId);
+                    break;
             }
         }
-
-
-//        for (Order order : orders) {
-//            if (req.getParameter("p" + order.getId()) != null
-//                    || req.getParameter("d" + order.getId()) != null) {
-//                service.updateOrderStatus(order);
-//                break;
-////                // pay
-////                if (orderService.setStatus(order, OrderStatus.PROCESSING) != null) {
-////                    userService.payOrder(user, order.getTotal());
-////                    break;
-////                }
-//
-//            } else if (req.getParameter("c" + order.getId()) != null) {
-//                // cancel
-//                orderService.cancelOrder(order);
-//                break;
-//            }
-//        }
 
         resp.sendRedirect("/profile/orders");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Order> orders = orderService.getUserOrders((User) req.getSession(false).getAttribute("user"));
+        List<Order> orders = service.getUserOrders((User) req.getSession(false).getAttribute("user"));
         req.getSession(false).setAttribute("orders", orders);
         req.getRequestDispatcher("../pages/profile/orders.jsp").forward(req, resp);
     }

@@ -6,10 +6,12 @@ import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.flower.Flower;
 import com.accenture.flowershop.be.entity.order.Order;
 import com.accenture.flowershop.be.entity.order.OrderStatus;
+import com.accenture.flowershop.be.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class MainBusinessServiceImpl implements MainBusinessService {
@@ -22,8 +24,17 @@ public class MainBusinessServiceImpl implements MainBusinessService {
     @Autowired
     private UserBusinessService userBusinessService;
 
-    public void cancelOrder(Order order) {
+    @Override
+    public Flower orderFlower(Flower flower, int amount) {
+        return flowerBusinessService.order(flower, amount);
+    }
 
+    public void cancelOrder(Order order) {
+        // TODO: cancel order
+    }
+
+    public void cancelOrder(Long orderId) {
+        cancelOrder(orderBusinessService.findById(orderId));
     }
 
     public Order updateOrderStatus(Order order) {
@@ -36,14 +47,14 @@ public class MainBusinessServiceImpl implements MainBusinessService {
     }
 
     public Order updateOrderStatus(Long orderId) {
-        Order order = orderBusinessService.findById(orderId);
-        if (order != null) {
-            order = updateOrderStatus(order);
-        }
-        return order;
+        return updateOrderStatus(orderBusinessService.findById(orderId));
     }
 
     public Collection<Flower> getFlowers(Collection<Long> flowersIds) {
         return flowerBusinessService.getFlowers(flowersIds);
+    }
+
+    public List<Order> getUserOrders(User user) {
+        return orderBusinessService.getUserOrders(user);
     }
 }
