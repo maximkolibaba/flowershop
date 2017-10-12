@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="css/index.css"/>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/register.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <script src="js/reg2.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <%--<script src="https://unpkg.com/vue"></script>--%>
 </head>
 <body>
 
@@ -49,7 +52,7 @@
 
                 <div class="form-group">
                     <label for="inputLogin">Username</label>
-                    <input type="text" class="form-control" id="inputLogin" name="login">
+                    <input type="text" class="form-control" id="inputLogin" name="login" v-model="postBody" v-on:keyup="postPost()">
                 </div>
 
                 <div id="divLogin"></div>
@@ -91,6 +94,31 @@
     </form>
 
 </div>
+<script>
+    import axios from 'axios';
 
+    debugger;
+
+    export default {
+        data() {
+            return {
+                postBody: '',
+                errors: []
+            }
+        },
+
+        postPost() {
+            axios.post('/rest/LoginRequest/IsUnique', {
+                body: this.postBody
+            })
+                .then(response => {
+
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+        }
+    }
+</script>
 </body>
 </html>
