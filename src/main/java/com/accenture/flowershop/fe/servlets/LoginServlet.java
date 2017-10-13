@@ -4,6 +4,8 @@ import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.JsonUtils;
 import com.accenture.flowershop.fe.Redirect;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -11,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.validation.constraints.AssertFalse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -25,6 +29,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonObject jsonObject = new Gson().fromJson(req.getReader(), JsonObject.class);
+
+        //        // 1. get received JSON data from request
+//        BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+//        String json = "";
+//        if(br != null){
+//            json = br.readLine();
+//        }
+
+
         User user = service.login(req.getParameter("login"), req.getParameter("password"));
         Boolean correctLogIn = user != null;
 
