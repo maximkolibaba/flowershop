@@ -76,4 +76,12 @@ public class MainBusinessServiceImpl implements MainBusinessService {
                 parameters.get("address")[0]
         );
     }
+
+    public User login(String login, String password) {
+        return null;
+    }
+
+    public User login(Map<String, String> parameters) {
+        return this.login(parameters.get("login"), parameters.get("password"));
+    }
 }

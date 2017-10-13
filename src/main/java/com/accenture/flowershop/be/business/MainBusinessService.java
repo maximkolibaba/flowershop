@@ -28,4 +28,8 @@ public interface MainBusinessService {
     User registerUser(String login, String password, String firstName, String lastName, String address);
 
     User registerUser(Map<String, String[]> parameters);
+
+    User login(String login, String password);
+
+    User login(Map<String, String> parameters);
 }

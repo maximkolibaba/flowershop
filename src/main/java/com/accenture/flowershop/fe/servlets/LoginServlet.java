@@ -1,9 +1,9 @@
 package com.accenture.flowershop.fe.servlets;
 
+import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.JsonUtils;
-import com.accenture.flowershop.fe.Redirect;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +12,17 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.validation.constraints.AssertFalse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
     @Autowired
-    private UserBusinessService service;
+    private UserBusinessService userBusinessService;
+
+    @Autowired
+    private MainBusinessService service;
 
     @Override
     public void init() throws ServletException {
@@ -30,16 +32,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject jsonObject = new Gson().fromJson(req.getReader(), JsonObject.class);
+        Map<String, String> map = jsonObject.entrySet().stream()
+                .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue().getAsString()));
+        User user = service.login(map);
 
-        //        // 1. get received JSON data from request
-//        BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
-//        String json = "";
-//        if(br != null){
-//            json = br.readLine();
-//        }
-
-
-        User user = service.login(req.getParameter("login"), req.getParameter("password"));
+        //User user = userBusinessService.login(jsonObject.get("login").getAsString(), jsonObject.get("password").getAsString());
         Boolean correctLogIn = user != null;
 
         HttpSession session = req.getSession(false);
