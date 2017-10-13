@@ -33,20 +33,8 @@ public class LoginServlet extends HttpServlet {
         Map<String, String> map = jsonObject.entrySet().stream()
                 .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue().getAsString()));
         User user = service.login(map);
-
-        //User user = userBusinessService.login(jsonObject.get("login").getAsString(), jsonObject.get("password").getAsString());
-        Boolean correctLogIn = user != null;
-
         HttpSession session = req.getSession(false);
-//        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn.toString());
 
-//        resp.addCookie(correctLoginCookie);
-        session.setAttribute("correctLogIn", correctLogIn);
-
-//        if (!correctLogIn) {
-//            resp.sendRedirect("login");
-//            return;
-//        }
         Map<String, String> data = new HashMap<>();
         if (user != null) {
             session.setAttribute("user", user);
@@ -55,13 +43,7 @@ public class LoginServlet extends HttpServlet {
 
 //        resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
 //        resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
-//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
-//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + user.getLogin() + "/info");
         }
-
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("utf-8");
-//        resp.getWriter().write(JsonUtils.mapToJson(data));
         JsonUtils.loadToResponse(data, resp);
     }
 
