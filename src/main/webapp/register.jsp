@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -7,7 +5,6 @@
 %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <title>Register</title>
@@ -18,10 +15,6 @@
     <link rel="stylesheet" href="css/index.css"/>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/register.js"></script>
-    <script src="js/reg2.js"></script>
-    <script src="js/vue.js"></script>
-    <script src="js/axios.js"></script>
-    <%--<script src="https://unpkg.com/vue"></script>--%>
 </head>
 <body>
 
@@ -30,95 +23,36 @@
     <h2>Register</h2>
     <br/>
 
-    <form method="post" action="register">
+    <div class="form-group">
+        <label for="inputLogin">Username</label>
+        <input type="text" class="form-control" id="inputLogin" name="login" v-model="postBody" v-on:keyup="postPost()">
+    </div>
 
-        <c:choose>
+    <div id="divLogin"></div>
 
-            <c:when test="${success eq 'true'}">
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="password">
+    </div>
 
-                <div style="color:#2b542c">Registration is completed.</div>
-                <br/>
+    <div class="form-group">
+        <label for="inputFirstName">First name</label>
+        <input type="text" class="form-control" id="inputFirstName" name="firstName">
+    </div>
 
-                <input type="button" class="btn btn-outline-success"
-                       value="Back to login page" onclick="window.location = '/index'">
+    <div class="form-group">
+        <label for="inputLastName">Last name</label>
+        <input type="text" class="form-control" id="inputLastName" name="lastName">
+    </div>
 
-                <% request.getSession(false).removeAttribute("success"); %>
+    <div class="form-group">
+        <label for="inputAddress">Home address</label>
+        <input type="text" class="form-control" id="inputAddress" name="address">
+    </div>
 
-            </c:when>
-
-            <c:otherwise>
-
-                <%-- Username --%>
-
-                <div class="form-group">
-                    <label for="inputLogin">Username</label>
-                    <input type="text" class="form-control" id="inputLogin" name="login" v-model="postBody" v-on:keyup="postPost()">
-                </div>
-
-                <div id="divLogin"></div>
-
-                <%-- Password --%>
-
-                <div class="form-group">
-                    <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" id="inputPassword" name="password">
-                </div>
-
-                <%-- First name --%>
-
-                <div class="form-group">
-                    <label for="inputFirstName">First name</label>
-                    <input type="text" class="form-control" id="inputFirstName" name="firstName">
-                </div>
-
-                <%-- Last name --%>
-
-                <div class="form-group">
-                    <label for="inputLastName">Last name</label>
-                    <input type="text" class="form-control" id="inputLastName" name="lastName">
-                </div>
-
-                <%-- Address --%>
-
-                <div class="form-group">
-                    <label for="inputAddress">Home address</label>
-                    <input type="text" class="form-control" id="inputAddress" name="address">
-                </div>
-
-                <input type="submit" class="btn btn-primary" value="Register" id="buttonRegister">
-
-            </c:otherwise>
-
-        </c:choose>
-
-    </form>
+    <input type="button" class="btn btn-primary" value="Register" id="buttonRegister">
 
 </div>
-<script>
-    import axios from 'axios';
 
-    debugger;
-
-    export default {
-        data() {
-            return {
-                postBody: '',
-                errors: []
-            }
-        },
-
-        postPost() {
-            axios.post('/rest/LoginRequest/IsUnique', {
-                body: this.postBody
-            })
-                .then(response => {
-
-                })
-                .catch(e => {
-                    this.errors.push(e)
-                })
-        }
-    }
-</script>
 </body>
 </html>

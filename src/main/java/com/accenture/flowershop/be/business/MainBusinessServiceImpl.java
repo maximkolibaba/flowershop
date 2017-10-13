@@ -67,14 +67,9 @@ public class MainBusinessServiceImpl implements MainBusinessService {
         return userBusinessService.register(login, password, firstName, lastName, address);
     }
 
-    public User registerUser(Map<String, String[]> parameters) {
-        return this.registerUser(
-                parameters.get("login")[0],
-                parameters.get("password")[0],
-                parameters.get("firstName")[0],
-                parameters.get("lastName")[0],
-                parameters.get("address")[0]
-        );
+    public User registerUser(Map<String, String> data) {
+        return userBusinessService.register(data.get("login"), data.get("password"),
+                data.get("firstName"), data.get("lastName"), data.get("address"));
     }
 
     public User login(String login, String password) {
@@ -82,6 +77,6 @@ public class MainBusinessServiceImpl implements MainBusinessService {
     }
 
     public User login(Map<String, String> parameters) {
-        return this.login(parameters.get("login"), parameters.get("password"));
+        return userBusinessService.login(parameters.get("login"), parameters.get("password"));
     }
 }

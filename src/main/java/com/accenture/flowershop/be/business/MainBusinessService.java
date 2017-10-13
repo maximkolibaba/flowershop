@@ -27,7 +27,7 @@ public interface MainBusinessService {
 
     User registerUser(String login, String password, String firstName, String lastName, String address);
 
-    User registerUser(Map<String, String[]> parameters);
+    User registerUser(Map<String, String> data);
 
     User login(String login, String password);
 

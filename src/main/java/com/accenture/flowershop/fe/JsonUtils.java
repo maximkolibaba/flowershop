@@ -1,9 +1,11 @@
 package com.accenture.flowershop.fe;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -11,26 +13,31 @@ import java.util.Map;
 public class JsonUtils {
     public static <T> String toJson(T obj) {
         try {
-            Gson gson = new Gson();
-            return URLEncoder.encode(gson.toJson(obj, obj.getClass()), "UTF-8");
+            return URLEncoder.encode(new Gson().toJson(obj, obj.getClass()), "UTF-8");
         } catch (IOException ex) {
             return "";
         }
     }
 
-    public static String mapToJson(Map<String, String> map) {
-        Gson gson = new Gson();
-        return gson.toJson(map);
-    }
-
     public static <T> T fromJson(String json, Class<T> tClass) {
         try {
-            json = URLDecoder.decode(json, "UTF-8");
-            Gson gson = new Gson();
-            return gson.fromJson(json, tClass);
+            return new Gson().fromJson(URLDecoder.decode(json, "UTF-8"), tClass);
         } catch (IOException ex) {
             return null;
         }
+    }
+
+    public static String mapToJson(Map<String, String> map) {
+        return new Gson().toJson(map);
+    }
+
+    public static Map<String, String> jsonToMap(String json) {
+        Type type = new TypeToken<Map<String,String>>(){}.getType();
+        return new Gson().fromJson(json, type);
+    }
+
+    public static void loadToResponse(Map<String, String> map, HttpServletResponse response) {
+        JsonUtils.loadToResponse(JsonUtils.mapToJson(map), response);
     }
 
     public static void loadToResponse(String json, HttpServletResponse response) {
@@ -41,9 +48,5 @@ public class JsonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void loadToResponse(Map<String, String> map, HttpServletResponse response) {
-        JsonUtils.loadToResponse(JsonUtils.mapToJson(map), response);
     }
 }

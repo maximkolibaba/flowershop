@@ -31,9 +31,7 @@ public class LoginRequest {
     @Path("/IsUnique")
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
-    public Boolean uniqueLogin2(String username) {
-//        return dao.getByLogin(username) == null ? "true" : "false";
-        User user = repository.findByLogin(username);
-        return user == null;
+    public String uniqueLogin2(String username) {
+        return repository.findByLogin(username) == null ? "true" : "false";
     }
 }

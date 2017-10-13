@@ -1,6 +1,8 @@
 package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.MainBusinessService;
+import com.accenture.flowershop.be.entity.user.User;
+import com.accenture.flowershop.fe.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
@@ -25,9 +29,15 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        boolean success = service.registerUser(req.getParameterMap()) != null;
-        req.getSession(false).setAttribute("success", success);
-        resp.sendRedirect("register");
+        User user = service.registerUser(JsonUtils.jsonToMap(req.getReader().readLine()));
+        Map<String, String> data = new HashMap<>();
+
+        if (user != null) {
+            req.getSession(false).setAttribute("user", user);
+            req.getSession(false).setAttribute("isAdmin", false);
+            data.put("redirect", "/profile/info");
+        }
+        JsonUtils.loadToResponse(data, resp);
     }
 
     @Override

@@ -23,6 +23,7 @@ $(function () {
                 password: password
             }),
             success: function (responseJson) {
+                $('#inputPassword').val(EMPTY_STRING);
                 if (responseJson.redirect) {
                     window.location = responseJson.redirect;
                     $divLogin.html(EMPTY_STRING);

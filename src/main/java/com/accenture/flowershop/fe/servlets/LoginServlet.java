@@ -3,18 +3,18 @@ package com.accenture.flowershop.fe.servlets;
 import com.accenture.flowershop.be.business.MainBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.JsonUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -29,18 +29,15 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonObject jsonObject = new Gson().fromJson(req.getReader(), JsonObject.class);
-        Map<String, String> map = jsonObject.entrySet().stream()
-                .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue().getAsString()));
-        User user = service.login(map);
-        HttpSession session = req.getSession(false);
+        User user = service.login(JsonUtils.jsonToMap(req.getReader().readLine()));
+//        HttpSession session = req.getSession(false);
 
         Map<String, String> data = new HashMap<>();
         if (user != null) {
-            session.setAttribute("user", user);
-            session.setAttribute("isAdmin", user.getIsAdmin());
+//            session.setAttribute("user", user);
+//            session.setAttribute("isAdmin", user.getIsAdmin());
             data.put("redirect", user.getIsAdmin() ? "/admin" : "/profile/info");
-
+            // TODO user cookies
 //        resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
 //        resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
         }
@@ -49,11 +46,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean isAdmin = (Boolean) req.getSession(false).getAttribute("isAdmin");
-        if (isAdmin != null) {
-            resp.sendRedirect(isAdmin ? "admin" : "profile");
-            return;
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+            if (isAdmin != null) {
+                resp.sendRedirect(isAdmin ? "admin" : "profile");
+                return;
+            }
         }
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        req.getRequestDispatcher("login.html").forward(req, resp);
     }
 }
