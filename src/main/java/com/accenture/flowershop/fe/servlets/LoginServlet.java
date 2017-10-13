@@ -1,7 +1,6 @@
 package com.accenture.flowershop.fe.servlets;
 
 import com.accenture.flowershop.be.business.MainBusinessService;
-import com.accenture.flowershop.be.business.user.UserBusinessService;
 import com.accenture.flowershop.be.entity.user.User;
 import com.accenture.flowershop.fe.JsonUtils;
 import com.google.gson.Gson;
@@ -13,13 +12,12 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
-    @Autowired
-    private UserBusinessService userBusinessService;
 
     @Autowired
     private MainBusinessService service;
@@ -40,23 +38,31 @@ public class LoginServlet extends HttpServlet {
         Boolean correctLogIn = user != null;
 
         HttpSession session = req.getSession(false);
-        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn.toString());
+//        Cookie correctLoginCookie = new Cookie("correctLogIn", correctLogIn.toString());
 
-        resp.addCookie(correctLoginCookie);
+//        resp.addCookie(correctLoginCookie);
         session.setAttribute("correctLogIn", correctLogIn);
 
-        if (!correctLogIn) {
-            resp.sendRedirect("login");
-            return;
+//        if (!correctLogIn) {
+//            resp.sendRedirect("login");
+//            return;
+//        }
+        Map<String, String> data = new HashMap<>();
+        if (user != null) {
+            session.setAttribute("user", user);
+            session.setAttribute("isAdmin", user.getIsAdmin());
+            data.put("redirect", user.getIsAdmin() ? "/admin" : "/profile/info");
+
+//        resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
+//        resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
+//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
+//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + user.getLogin() + "/info");
         }
 
-        session.setAttribute("user", user);
-        session.setAttribute("isAdmin", user.getIsAdmin());
-
-        resp.addCookie(new Cookie("user", JsonUtils.toJson(user)));
-        resp.addCookie(new Cookie("isAdmin", user.getIsAdmin().toString()));
-//        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/profile/info");
-        resp.sendRedirect(user.getIsAdmin() ? "admin" : "/rest/" + user.getLogin() + "/info");
+//        resp.setContentType("application/json");
+//        resp.setCharacterEncoding("utf-8");
+//        resp.getWriter().write(JsonUtils.mapToJson(data));
+        JsonUtils.loadToResponse(data, resp);
     }
 
     @Override

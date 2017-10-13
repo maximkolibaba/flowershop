@@ -1,5 +1,10 @@
 $(function () {
+    const EMPTY_STRING = '';
+    const INCORRECT_LOGIN = 'Incorrect login/password. Please try again or register.</p>';
+
     var $signButton = $('#signInButton');
+    var $divLogin = $('#incorrect-login');
+    $divLogin.html(EMPTY_STRING);
 
     $signButton.bind('click', function () {
         var login = $('#inputLogin').val();
@@ -10,8 +15,6 @@ $(function () {
             return;
         }
 
-        debugger;
-
         $.ajax({
             url: '/login',
             type: 'POST',
@@ -19,16 +22,14 @@ $(function () {
                 login: login,
                 password: password
             }),
-            contentType: 'application/json',
-            success: function(response) {
-                // TODO
+            success: function (responseJson) {
+                if (responseJson.redirect) {
+                    window.location = responseJson.redirect;
+                    $divLogin.html(EMPTY_STRING);
+                    return;
+                }
+                $divLogin.html(INCORRECT_LOGIN);
             }
         });
     });
-
-    function doLogin(correctLogIn) {
-        if (correctLogIn) {
-
-        }
-    }
 });

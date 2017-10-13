@@ -27,7 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="../../css/index.css"/>
-    <script src="../../js/admin.js"></script>
+    <script src="../../js/login.js"></script>
     <script src="../../js/vue.js"></script>
     <script src="../../js/axios.js"></script>
 </head>

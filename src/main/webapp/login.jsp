@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="css/index.css"/>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <body>
 
@@ -26,7 +26,6 @@
     <h2>Flower Shop</h2>
     <br/>
 
-    <%--<form method="post" action="login">--%>
     <form>
 
         <div class="form-group">
@@ -39,15 +38,10 @@
             <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
         </div>
 
-        <c:choose>
-            <c:when test="${correctLogIn eq 'false'}">
-                <div style="color:#ff4500">Incorrect login/password. Please try again or register.</div>
-                <br/>
-            </c:when>
-        </c:choose>
+        <div id="incorrect-login" style="color:#ff4500"></div>
 
-        <%--<input type="submit" class="btn btn-primary" value="Sign In">--%>
-        <button id="signInButton" class="btn btn-primary">Sign In</button>
+        <%--<input type="submit" class="btn btn-primary" >--%>
+        <input type="button" id="signInButton" class="btn btn-primary" value="Sign In">
 
         <input type="button" class="btn btn-secondary" value="Register"
                name="buttonRegister" onclick="window.location = '/register'">

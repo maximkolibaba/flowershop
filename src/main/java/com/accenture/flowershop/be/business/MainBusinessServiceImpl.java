@@ -78,7 +78,7 @@ public class MainBusinessServiceImpl implements MainBusinessService {
     }
 
     public User login(String login, String password) {
-        return null;
+        return userBusinessService.login(login, password);
     }
 
     public User login(Map<String, String> parameters) {
