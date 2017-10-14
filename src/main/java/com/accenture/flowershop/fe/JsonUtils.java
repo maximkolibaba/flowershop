@@ -12,8 +12,14 @@ import java.util.Map;
 
 public class JsonUtils {
     public static <T> String toJson(T obj) {
+        Type type = new TypeToken<T>(){}.getType();
+        return new Gson().toJson(obj, type);
+    }
+
+    public static <T> String toJsonUtf8(T obj) {
         try {
-            return URLEncoder.encode(new Gson().toJson(obj, obj.getClass()), "UTF-8");
+            Type type = new TypeToken<T>(){}.getType();
+            return URLEncoder.encode(new Gson().toJson(obj, type), "UTF-8");
         } catch (IOException ex) {
             return "";
         }

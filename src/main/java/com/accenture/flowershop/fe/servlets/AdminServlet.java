@@ -32,7 +32,7 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("allOrders", service.getAllOrders());
-        req.getRequestDispatcher("pages/profile/admin.jsp").forward(req, resp);
+        req.getRequestDispatcher("admin.html").forward(req, resp);
     }
 
     @Override

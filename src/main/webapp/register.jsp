@@ -13,8 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap/bootstrap4.min.css"/>
     <link rel="stylesheet" href="css/index.css"/>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/register.js"></script>
 </head>
 <body>
 
@@ -53,6 +51,10 @@
     <input type="button" class="btn btn-primary" value="Register" id="buttonRegister">
 
 </div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="js/register.js"></script>
 
 </body>
 </html>
