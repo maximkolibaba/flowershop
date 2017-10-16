@@ -22,15 +22,20 @@ new Vue({
     },
     methods: {
         updateStatus: function (orderId) {
-            this.$http.post('/rest/user/update_status', orderId, {headers:{'Content-type':'text/html'}}).then(response => {
-                for (var i = 0; i < this.orders.length; i++) {
-                    if (this.orders[i].id === response.body.id) {
-                        // TODO: cool status sorting
-                        this.$set(this.orders, i, response.body);
-                        break;
+            this.$http.post('/rest/user/update_status', orderId, {
+                    headers: {
+                        'Content-type': 'text/html'
                     }
-                }
-            });
+                })
+                .then(response => {
+                    for (var i = 0; i < this.orders.length; i++) {
+                        if (this.orders[i].id === response.body.id) {
+                            // TODO: cool status sorting
+                            this.$set(this.orders, i, response.body);
+                            break;
+                        }
+                    }
+                });
         },
         logout: function () {
             // TODO

@@ -6,6 +6,7 @@ import com.accenture.flowershop.be.entity.order.OrderStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,12 +21,16 @@ public class AdminRest {
     private MainBusinessService service;
 
     @POST
-    @Consumes(MediaType.TEXT_HTML)
     @Path("/update_order")
-    public void updateOrderStatus(String orderId) {
+    @Consumes(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JsonObject updateOrderStatus(String orderId) {
         if (!StringUtils.isEmpty(orderId)) {
-            service.updateOrderStatus(Long.parseLong(orderId.substring(1)));
+            return new Gson()
+                    .toJsonTree(service.updateOrderStatus(Long.parseLong(orderId.substring(1))))
+                    .getAsJsonObject();
         }
+        return new JsonObject();
     }
 
     // TODO could return JsonObject
